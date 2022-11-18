@@ -1,0 +1,21 @@
+<%-include("partials/header");-%>
+<body class="updateProfile">
+
+    <h1>Update Profile of a user</h1>
+
+
+    <form action="/updateProfile" method="POST">
+    <div>
+        <h3>Existing User ID</h3>
+        <input type="text" placeholder="Enter Existing User ID" name="userID">
+        <h3>New User ID</h3>
+        <input type="text" placeholder="Enter New User ID" name="password">
+        <div>
+            <button type="submit"class="btn btn-space">Update Profile</button>
+        </div>   
+    </div>
+    </form>
+    <h3><%=message%></h3>
+    <!-- <<script src="/js/index.js"></script> -->
+</body>
+</html>

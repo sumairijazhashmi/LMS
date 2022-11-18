@@ -1,0 +1,35 @@
+<%-include("partials/header");-%>
+<body class="adminHome">
+
+    <h1>Welcome Admin!</h1>
+
+
+    <form action="/adminHome" method="POST">
+    <div>
+        <div>
+            <button type="submit" class="btn btn-space">Create Account </button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Delete Account</button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Add New Course</button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Remove Existing Course</button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Update Profile of a User</button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Update Password</button>
+        </div>
+        <div>
+            <button type="submit"class="btn btn-space">Log out</button>
+        </div>
+    </div>
+    </form>
+    <h3><%=message%></h3>
+    <!-- <<script src="/js/index.js"></script> -->
+</body>
+</html>

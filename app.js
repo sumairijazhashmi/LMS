@@ -17,14 +17,14 @@ const app = express();
 const port = process.env.PORT || 5000
 
 
-db.connect((err) => {
-  if(err){
-    console.log(err);
-  } 
-  else{
-    console.log("DATABASE CONNECTED")
-  }
-})
+// db.connect((err) => {
+//   if(err){
+//     console.log(err);
+//   } 
+//   else{
+//     console.log("DATABASE CONNECTED")
+//   }
+// })
 
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,6 +38,42 @@ const { start } = require("repl");
 app.get("/main",(req,res)=>{
   res.render("main", {message: ""}); // file name original 
 });
+
+app.get("/adminHome",(req,res)=>{
+  console.log(req);
+  res.render("adminHome", {message: ""}); // file name original 
+}
+);
+
+app.get("/updatePassword",(req,res)=>{
+  console.log(req);
+  res.render("updatePassowrd", {message: ""}); // file name original 
+}
+);
+
+app.get("/addNewCourse",(req,res)=>{
+  console.log(req);
+  res.render("addNewCourse", {message: ""}); // file name original 
+}
+);
+
+app.get("/removeExistingCourse",(req,res)=>{
+  console.log(req);
+  res.render("removeExistingCourse", {message: ""}); // file name original 
+}
+);
+
+app.get("/updateProfile",(req,res)=>{
+  console.log(req);
+  res.render("updateProfile", {message: ""}); // file name original 
+}
+);
+
+app.get("/",(req,res)=>{
+  console.log(req);
+  res.render("home", {message: ""}); // file name original 
+}
+);
 
 app.get("/home",(req,res)=>{
   console.log(req);
@@ -60,18 +96,18 @@ app.post("/main",(req,res)=>{
 
 // write above code as call back function
 
-app.get("/create_account",(req,res)=>{
-  res.render("create_account", {message: ""}); // file name original 
-});
+// app.get("/create_account",(req,res)=>{
+//   res.render("create_account", {message: ""}); // file name original 
+// });
 
-app.post("/create_account",(req,res)=>{
-  username = req.body.userID;
-  password = req.body.password;
-  email = req.body.email;
-  role = req.body.role;
-  auth.createAccount(username,password,email,role, res);
-}
-);
+// app.post("/create_account",(req,res)=>{
+//   username = req.body.userID;
+//   password = req.body.password;
+//   email = req.body.email;
+//   role = req.body.role;
+//   auth.createAccount(username,password,email,role, res);
+// }
+// );
 
 
 

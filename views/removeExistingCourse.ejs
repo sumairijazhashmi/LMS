@@ -1,0 +1,21 @@
+<%-include("partials/header");-%>
+<body class="removeExistingCourse">
+
+    <h1>Remove Existing Course</h1>
+
+
+    <form action="/removeExistingCourse" method="POST">
+    <div>
+        <h3>Course Name</h3>
+        <input type="text" placeholder="Course Name" name="courseName">
+        <h3>Course Code</h3>
+        <input type="text" placeholder="Course Code" name="courseCode">
+        <div>
+            <button type="submit"class="btn btn-space">Confirm</button>
+        </div>   
+    </div>
+    </form>
+    <h3><%=message%></h3>
+    <!-- <<script src="/js/index.js"></script> -->
+</body>
+</html>
