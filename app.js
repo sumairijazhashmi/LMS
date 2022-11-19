@@ -10,6 +10,7 @@ const db = require("./db_config/db");
 const auth = require("./authorization/auth.js");
 const session = require('express-session');
 const passport = require("passport");
+const accounts=require("./routes/account");
 
 // authorization\auth.js
 const app = express();
@@ -94,6 +95,50 @@ app.post("/main",(req,res)=>{
   auth.login(username,password, res);
 }
 );
+
+app.get("/message",(req,res)=>{
+  res.render("message", {
+    myVar: "Account Created.",
+    extra: "Login Credentials are sent through email."
+});
+});
+
+
+app.get("/delete",(req,res)=>{
+  res.render("delete", {
+    status:"display: none",
+    noRecords:"display: none",
+    data: ""
+});
+});
+app.post("/deleteDetails/:id/:role",async(req,res)=>{
+  let id1 = req.params.id;
+  let role=req.params.role;
+  accounts.delDetail(id1,role,res);
+})
+
+app.get("/register",(req,res)=>{
+  res.render("register", {
+    myVar: ""
+});
+})
+app.post("/delete",async (req,res)=>{
+  accounts.delAcc(req,res);
+});
+
+
+app.post("/register",async (req,res)=>{
+  my_var="";
+  userName = req.body.username;
+  name1=req.body.fullName;
+  email = req.body.emailAddress;
+  password1 = req.body.password1;
+  password2 = req.body.password2;
+  radio=req.body.optradio;
+  console.log("hiii");
+  console.log(userName, password1,name1,email,password2,radio);
+  accounts.addAcc(userName, password1,name1,email,radio,my_var,res);
+});
 
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");

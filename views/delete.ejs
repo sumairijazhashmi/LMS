@@ -1,0 +1,65 @@
+<%-include("partials/header");-%>
+<body>
+    <style>
+        body {
+            background-color: #000
+        }
+    
+        .card {
+            border: none
+        }
+    
+        .detail {
+            background-color: #afe0bd
+        }
+    
+        .about {
+            font-size: 16px
+        }
+    
+    </style>
+    <section class="vh-100" style="background-image:url('https://cdn.techjuice.pk/wp-content/uploads/2020/11/LUMS-1024x434.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container h-100 w-50">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 10px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    
+                    <div class="mt-3 h-50 w-50 justify-content-center align-items-center">
+                        <img class="img-fluid" src="images/logo.jpg" alt="Not found"/>
+                    </div>
+                    <form action="/delete" method="POST" class="needs-validation">
+                        <p class="form-label h4 mt-5" for="form3Example1c">Remove Account</p>
+                        <div class="input-group ">
+                            <input type="number" class="form-control form-control-lg rounded" placeholder="User ID" aria-label="Search" aria-describedby="search-addon" name="id1" required />
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Find</button>
+                        </div>
+                    </form>
+                    <div class="detail p-4 mt-3" id="cardD" style="<%= status %>">
+                        <h5 class="text-uppercase"><%= data.role %></h5>
+                        <hr class="bg-dark border-2 border-top border-dark mt-0">
+                        <div class="mt-2 mb-3"><span class="about"><strong>User ID:&emsp;</strong><%= data.username %></span>
+                            <div class="d-flex flex-row align-items-center"> <span
+                                    class="about"><strong>Name:&emsp;</strong> <%= data.name %></span>
+                            </div>
+                            <div class="about"><strong>Email:&emsp;</strong><%= data.email %> </div>
+                        </div>
+                        <form method='POST' action="/deleteDetails/<%= data.username %>/<%= data.role %>">
+                            <div class="cart mt-4 align-items-center"> <button
+                                class="btn btn-success text-uppercase mr-2 px-4" name="but"type="submit">Delete</button>
+                        </div>
+                        </form>     
+                    </div>
+                    <div class="display-6 justify-content-center align-items-center mt-3 py-2" style="<%= noRecords %>; font-size: 15px; background-color: #afe0bd;">No Records Found</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>   
+      <script src="/js/index.js" type="text/javascript"></script>
+</body>
+</html>
+

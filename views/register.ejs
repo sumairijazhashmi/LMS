@@ -1,0 +1,74 @@
+<%-include("partials/header");-%>
+<body onload="foo({ fo: '<%= myVar %>'})">
+    <section class="vh-100" style="background-image:url('https://cdn.techjuice.pk/wp-content/uploads/2020/11/LUMS-1024x434.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container h-100 w-50">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 10px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    
+                    <div class="mt-3 h-50 w-50 justify-content-center align-items-center">
+                        <img class="img-fluid" src="images/logo.jpg" alt="Not found"/>
+                    </div>
+                    <form action="/register" method="POST" class="needs-validation" onsubmit="return checkPassword()">
+                        <div class="mb-3 lead">
+                            <label class="form-label h4" for="form3Example1c">Full Name</label>
+                            <input type="text" class="form-control form-control-lg" name='fullName' required>
+                            <div class="invalid-feedback">
+                                Please enter name.
+                            </div>
+                          </div>
+                          <div class="mb-3 lead">
+                            <label class="form-label h4" for="form3Example1c">User ID</label>
+                            <input type="number" class="form-control form-control-lg" name='username' required>
+                            <div class="invalid-feedback">
+                                Please enter username.
+                            </div>
+                          </div>
+                        <div class="mb-3 lead">
+                          <label for="exampleInputEmail1" class="form-label h4">Email address</label>
+                          <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="emailAddress" aria-describedby="emailHelp" required>
+                          <div class="invalid-feedback">
+                            Please provide a valid email.
+                        </div>
+                        </div>
+                        <div class="mb-3 lead">
+                          <label for="exampleInputPassword1" class="form-label h4">Password</label>
+                          <input type="password" class="form-control form-control-lg" id="password1" name="password1" required>
+    
+                        </div>
+                        <div class="mb-3 lead">
+                            <label for="exampleInputPassword2" class="form-label h4">Repeat Password</label>
+                            <input type="password" class="form-control form-control-lg" id="password2" name="password2" required>
+                          </div>
+                          <p class="lead p-2" id="message"></p>
+                        <h6 class="mb-2 pb-1 h4">Register as</h6>
+    
+                            <div class="form-check form-check-inline lead">
+                                <input type="radio" class="form-check-input" id="radio1" name="optradio" value="instructor" required>
+                                <label class="form-check-label-lg lead" for="radio1">Instructor</label>
+                            </div>
+    
+                            <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                                <input type="radio" class="form-check-input" id="radio2" name="optradio" value="student" checked/>
+                                <label class="form-check-label-lg lead" for="radio2">Student</label>
+                            </div>
+                            <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                              <input type="radio" class="form-check-input" id="radio3" name="optradio" value="admin"/>
+                              <label class="form-check-label-lg lead" for="radio3">Admin</label>
+                          </div>
+                            <br>
+                        <button type="submit" id="bt-1" class="btn btn-primary btn-lg btn-block active" onclick=checkPassword() style="font-size: 16px;">Register</button>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>   
+      <script src="/js/index.js"></script>
+</body>
+</html>
+

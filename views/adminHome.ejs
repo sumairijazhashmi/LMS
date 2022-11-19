@@ -1,16 +1,16 @@
 <%-include("partials/header");-%>
 <body class="adminHome">
-
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
     <h1>Welcome Admin!</h1>
 
 
-    <form action="/adminHome" method="POST">
+    <form action="/adminHome" method="GET">
     <div>
         <div>
-            <button type="submit" class="btn btn-space">Create Account </button>
+            <button type="submit" class="btn btn-space" formaction="/register">Create Account </button>
         </div>
         <div>
-            <button type="submit"class="btn btn-space">Delete Account</button>
+            <button type="submit"class="btn btn-space" formaction="/delete">Delete Account</button>
         </div>
         <div>
             <button type="submit"class="btn btn-space">Add New Course</button>
