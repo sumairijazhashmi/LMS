@@ -11,6 +11,9 @@ const auth = require("./authorization/auth.js");
 const session = require('express-session');
 const passport = require("passport");
 const accounts=require("./routes/account");
+const updatePass=require("./routes/updatePass");
+const courses=require("./routes/courses");
+const updateProfile=require("./routes/updateProfile");
 
 // authorization\auth.js
 const app = express();
@@ -41,44 +44,48 @@ app.get("/main",(req,res)=>{
 });
 
 app.get("/adminHome",(req,res)=>{
-  console.log(req);
   res.render("adminHome", {message: ""}); // file name original 
 }
 );
 
 app.get("/updatePassword",(req,res)=>{
-  console.log(req);
-  res.render("updatePassowrd", {message: ""}); // file name original 
+  res.render("updatePassword", {message: ""}); // file name original 
 }
 );
 
 app.get("/addNewCourse",(req,res)=>{
-  console.log(req);
   res.render("addNewCourse", {message: ""}); // file name original 
 }
 );
 
+app.get("/studenthome",(req,res)=>{
+  res.render("studenthome", {message: ""}); // file name original 
+}
+);
+
 app.get("/removeExistingCourse",(req,res)=>{
-  console.log(req);
   res.render("removeExistingCourse", {message: ""}); // file name original 
 }
 );
 
 app.get("/updateProfile",(req,res)=>{
-  console.log(req);
   res.render("updateProfile", {message: ""}); // file name original 
+}
+);
+
+app.get("/instructorhome",(req,res)=>{
+  res.render("instructorhome", {message: ""}); // file name original 
 }
 );
 
 // User will first have to login on main page only then he can access his/her home page
 app.get("/",(req,res)=>{
-  console.log(req);
-  res.render("main", {message: ""}); // file name original 
+  res.render("main", {message: ""});
 }
 );
 
 app.get("/home",(req,res)=>{
-  console.log(req);
+  // console.log(req);
   res.render("home", {message: ""}); // file name original 
 }
 );
@@ -87,12 +94,13 @@ app.get("/",(req,res)=>{
     res.render("main", {message: ""});
 })
 
-app.post("/main",(req,res)=>{
+app.post("/login",(req,res)=>{
   username = req.body.userID;
   password = req.body.password;
-  console.log(username);
-  console.log(password);
-  auth.login(username,password, res);
+  // console.log(username);
+  // console.log(password);
+
+  auth.login(username,password,res);
 }
 );
 
@@ -122,10 +130,75 @@ app.get("/register",(req,res)=>{
     myVar: ""
 });
 })
+
+app.get("/logout",(req,res)=>{
+  res.render("main", {message: "Logged Out!"});
+})
+
 app.post("/delete",async (req,res)=>{
   accounts.delAcc(req,res);
 });
 
+app.post("/updatePassword",(req,res)=>{
+
+  userID = req.body.userID
+  oldPass = req.body.oldPass
+  newPass = req.body.newPass
+  rePass = req.body.rePass
+
+
+  updatePass.updatePass(userID, oldPass, newPass, rePass, res)
+  
+});
+
+app.post("/updateProfile",(req,res)=>{
+
+  userID = req.body.userID
+  // newUserID = req.body.newUserID
+  newName = req.body.newName
+  newEmail = req.body.newEmail
+  // newRole = req.body.newRole
+
+
+  updateProfile.updateProfile(userID, newName, newEmail, res)
+  
+});
+
+app.post("/addNewCourse",(req,res)=>{
+
+  courseName = req.body.courseName
+  courseCode = req.body.courseCode
+
+
+  courses.addCourse(courseName, courseCode, res)
+  
+});
+
+app.post("/instructorhome",(req,res)=>{
+
+  if(req.body.button == 'updatePassword')
+  {
+    res.redirect("/updatePassword");
+  }
+  else if(req.body.button == 'logout')
+  {
+    res.render("main", {message: "Logged Out!"});
+  }
+  
+});
+
+app.post("/studenthome",(req,res)=>{
+
+  if(req.body.button == 'updatePassword')
+  {
+    res.redirect("/updatePassword");
+  }
+  else if(req.body.button == 'logout')
+  {
+    res.render("main", {message: "Logged Out!"});
+  }
+  
+});
 
 app.post("/register",async (req,res)=>{
   my_var="";

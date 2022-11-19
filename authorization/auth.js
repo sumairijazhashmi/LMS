@@ -3,9 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv").config();
-// require dotenv
-
-
 
 const login = async (username,password, res) => {
     try {
@@ -22,15 +19,27 @@ const login = async (username,password, res) => {
                 res.status(401).render("main", {message: "Username or Password is incorrect"});
             } 
             else {
-                const token = jwt.sign({ id: results[0].id }, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRES_IN
-                });
-                console.log("The token is: " + token);
-                res.cookie("jwt", token, {
-                    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES*60* 1000),
-                    httpOnly: true
-                });
-                res.status(200).redirect("home");
+                if (results[0].role == 'instructor')
+                {
+                    res.redirect("/instructorhome");
+                }
+                else if (results[0].role == 'admin')
+                {
+                    res.redirect("/adminHome");
+                }
+                else if (results[0].role == 'student')
+                {
+                    res.redirect("/studenthome");
+                }
+                // const token = jwt.sign({ id: results[0].id }, process.env.JWT_SECRET, {
+                //     expiresIn: process.env.JWT_EXPIRES_IN
+                // });
+                // console.log("The token is: " + token);
+                // res.cookie("jwt", token, {
+                //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES*60* 1000),
+                //     httpOnly: true
+                // });
+                // res.status(200).redirect("home");
             }
         });
     } catch (error) {
