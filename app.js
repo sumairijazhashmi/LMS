@@ -69,9 +69,10 @@ app.get("/updateProfile",(req,res)=>{
 }
 );
 
+// User will first have to login on main page only then he can access his/her home page
 app.get("/",(req,res)=>{
   console.log(req);
-  res.render("home", {message: ""}); // file name original 
+  res.render("main", {message: ""}); // file name original 
 }
 );
 
@@ -93,23 +94,6 @@ app.post("/main",(req,res)=>{
   auth.login(username,password, res);
 }
 );
-
-// write above code as call back function
-
-// app.get("/create_account",(req,res)=>{
-//   res.render("create_account", {message: ""}); // file name original 
-// });
-
-// app.post("/create_account",(req,res)=>{
-//   username = req.body.userID;
-//   password = req.body.password;
-//   email = req.body.email;
-//   role = req.body.role;
-//   auth.createAccount(username,password,email,role, res);
-// }
-// );
-
-
 
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");

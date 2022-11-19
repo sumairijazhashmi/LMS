@@ -1,10 +1,13 @@
-const mysql = require("mysql");
-const dotenv = require("dotenv").config();
-const db = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-});
+var mysql = require('mysql');
 
-module.exports = db;
+var connectionString = mysql.createConnection({
+    host: "139.162.41.151",
+    user: "dbcourse",
+    password: "9yPpXjI5fhnDDCO",
+    database: "LMS"
+});
+module.exports = connectionString;
+connectionString.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
