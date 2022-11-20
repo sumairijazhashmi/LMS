@@ -168,9 +168,21 @@ app.post("/addNewCourse",(req,res)=>{
 
   courseName = req.body.courseName
   courseCode = req.body.courseCode
+  instructor = req.body.instructor
+  year = req.body.year
+  semmester = req.body.sem
+  credit_hrs = req.body.credit_hrs
 
+  courses.addCourse(courseName, courseCode, instructor, year, semmester, credit_hrs, res)
+  
+});
 
-  courses.addCourse(courseName, courseCode, res)
+app.post("/removeExistingCourse",(req,res)=>{
+
+  courseName = req.body.courseName
+  courseCode = req.body.courseCode
+
+  courses.delCourse(courseName, courseCode, res)
   
 });
 

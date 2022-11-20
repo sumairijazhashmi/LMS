@@ -30,16 +30,14 @@ function seedData(query)
       });
 }
 
-const updateProfile = async (userID, newUserID, newName, newEmail, res) => {
+const updateProfile = async (userID, newName, newEmail, res) => {
     try {
         if (!userID) {
-            return res.status(400).render("updatePassword", {message: "Please provide an ID"});
+            return res.status(400).render("updateProfile", {message: "Please provide an ID"});
         }
 
         lms_db.query("SELECT * FROM Account WHERE username = ?", [userID], async (error, results) => {
 
-            // username, role, email, name
-            // oldRole = results[0].role
             oldEmail = results[0].email
             oldName = results[0].name
 
@@ -90,27 +88,6 @@ const updateProfile = async (userID, newUserID, newName, newEmail, res) => {
             // {
             //     let account_query = `Update Account Set role=${newRole} where username="${userID}";`;
             //     let x = await seedData(account_query);
-            // }
-
-            // if(newUserID && newUserID !== userID)
-            // {
-            //     let account_query = `Update Account Set username="${newUserID}" where username="${userID}";`;
-            //     let x = await seedData(account_query);
-            //     if (results[0].role == 'instructor')
-            //     {
-            //         let account_query = `Update Instructor Set username="${newUserID}" where instructor_id="${userID}";`;
-            //         let x = await seedData(account_query);
-            //     }
-            //     else if (results[0].role == 'admin')
-            //     {
-            //         let account_query = `Update admin Set username="${newUserID}" where admin_id="${userID}";`;
-            //         let x = await seedData(account_query);
-            //     }
-            //     else if (results[0].role == 'student')
-            //     {
-            //         let account_query = `Update Student Set username="${newUserID}" where student_id="${userID}";`;
-            //         let x = await seedData(account_query);
-            //     }
             // }
 
 

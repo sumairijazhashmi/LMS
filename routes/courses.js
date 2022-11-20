@@ -26,18 +26,20 @@ function seedData(query)
       });
 }
 
-const addCourse = async (courseName, courseCode, res) => {
+const addCourse = async (courseName, courseCode, instructor, year, semmester, credit_hrs, res) => {
     try 
     {
-        if (!username || !oldPass || !newPass || !rePass) {
-            return res.status(400).render("updatePassword", {message: "Please provide Course Name or Course Code"});
+        if (!courseName || !courseCode ) {
+            return res.status(400).render("addNewCourse", {message: "Please provide Course Name or Course Code"});
         }
 
         else
         {
-            let query = `Insert into Course (year, semester, name, credit_hrs) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
+            let query = `Insert into Course (course_id, year_offered, sem_offered, name, credit_hrs, instructor) values("${courseCode}", "${year}", "${semmester}","${courseName}", "${credit_hrs}", "${instructor}");`;
             await seedData(query);
         }
+
+        res.redirect("/adminHome");
 
         
     } catch (error) {
@@ -45,8 +47,31 @@ const addCourse = async (courseName, courseCode, res) => {
     }
 };
 
+const delCourse = async (courseName, courseCode, res) => {
+    try 
+    {
+        if (!courseName || !courseCode ) {
+            return res.status(400).render("removeExistingCourse", {message: "Please provide Course Name or Course Code"});
+        }
+
+        else
+        {
+            let account_query = `Delete from Course where course_id="${courseCode}";`;
+            let x= await seedData(account_query);
+            console.log("Delete course")
+        }
+
+        res.redirect("/adminHome");
+
+        
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
 module.exports = {
-    addCourse
+    addCourse, delCourse
 };
 
 

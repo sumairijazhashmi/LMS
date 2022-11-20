@@ -16,21 +16,46 @@
 
         <div>
             <h3>Course Code</h3>
-            <input type="text" placeholder="Course Code" name="courseCode">
+            <input type="number" placeholder="Course Code" name="courseCode">
         </div>
 
         <br><br>
 
         <div>
             <h3>Year Offered</h3>
-            <input type="text" placeholder="Course Code" name="year">
+            <input type="number" placeholder="Year Offered" name="year">
+        </div>
+
+        <br><br>
+
+        <div>
+            <h3>Credit Hours</h3>
+            <input type="number" placeholder="Semester" name="credit_hrs">
         </div>
 
         <br><br>
 
         <div>
             <h3>Semester</h3>
-            <input type="text" placeholder="Course Code" name="sem">
+            <!-- <input type="text" placeholder="Credit Hours" name="credit_hrs"> -->
+
+            <div class="form-check form-check-inline lead">
+                <input type="radio" class="form-check-input" id="radio1" name="sem" value="fall" required>
+                <label class="form-check-label-lg lead" for="radio1">Fall</label>
+            </div>
+
+            <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                <input type="radio" class="form-check-input" id="radio2" name="sem" value="spring" checked/>
+                <label class="form-check-label-lg lead" for="radio2">Spring</label>
+            </div>
+            
+        </div>
+
+        <br><br>
+
+        <div> 
+            <h3>Instructor ID</h3>
+            <input type="number" placeholder="Instructor" name="instructor">
         </div>
 
         <br><br>
