@@ -1,14 +1,14 @@
 
 const connectionString = require ("../db_config/db");
-// var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
 
-// var transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'lumslms2022@gmail.com',
-//     pass: 'foeggynvmyulwyim'
-//   }
-// });
+var transporter = nodemailer.createTransport({
+   service: 'gmail',
+   auth: {
+     user: 'lumslms2022@gmail.com',
+     pass: 'foeggynvmyulwyim'
+   }
+});
 
 
 function seedData(query)
@@ -35,23 +35,23 @@ function seedData(query)
        });
       });
 }
-// function sendEmail(email,text)
-// {
-//   var mailOptions = {
-//     from: 'LUMS LMS',
-//     to: email,
-//     subject: 'LMS Login Credentails | LUMS',
-//     text: text
-//   };
+function sendEmail(email,text)
+{
+   var mailOptions = {
+     from: 'LUMS LMS',
+     to: email,
+     subject: 'LMS Login Credentails | LUMS',
+     text: text
+   };
   
-//   transporter.sendMail(mailOptions, function(error, info){
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       console.log('Email sent: ' + info.response);
-//     }
-//   });
-// }
+   transporter.sendMail(mailOptions, function(error, info){
+     if (error) {
+       console.log(error);
+     } else {
+       console.log('Email sent: ' + info.response);
+     }
+   });
+}
 
 async function addAcc (userName, password1,name1,email,radio,my_var,res)
 {
@@ -109,7 +109,7 @@ async function addAcc (userName, password1,name1,email,radio,my_var,res)
     \nPlease DO NOT share your credentails with anyone.\nLMS link: http://127.0.0.1:5000/login
     \nRegards,\nOffice of the Registrar, LUMS
     `
-    // sendEmail(email,text)
+    sendEmail(email,text)
     res.render("message", {
       myVar: "Account Created.",
       extra: "Login Credentials are sent through email."
