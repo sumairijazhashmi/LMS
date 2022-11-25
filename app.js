@@ -14,11 +14,17 @@ const accounts=require("./routes/account");
 const updatePass=require("./routes/updatePass");
 const courses=require("./routes/courses");
 const updateProfile=require("./routes/updateProfile");
+const postAssignment = require("./routes/postAssignment");
+const fileUpload = require("express-fileupload");
 
 // authorization\auth.js
 const app = express();
 
 const port = process.env.PORT || 5000
+
+
+let courseID, sem, year; // please update these in course tab and stuff
+// let assessmentID = 0; // when starting out, no assessments
 
 
 // db.connect((err) => {
@@ -33,6 +39,7 @@ const port = process.env.PORT || 5000
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
+app.use(fileUpload())
 const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const { runInNewContext } = require("vm");
 const { concat } = require("lodash");
@@ -217,6 +224,25 @@ app.post("/studenthome",(req,res)=>{
 
 app.get("/postAssignment", (req, res)=> {
   res.render("postAssignment", {message: ""});
+})
+
+app.post("/postAssignment", (req, res)=> {
+  title = req.body.assTitle;
+  text = req.body.assText;
+  file = req.files.assFile;
+  file_name = file.name;
+  marks = req.body.assMarks;
+  due_date = req.body.submissionDate;
+  release_date = req.body.releaseDate;
+  course_name = req.body.courseName;
+  course_code = req.body.courseCode;
+  year = req.body.year;
+  sem = req.body.sem;
+  made_by = req.body.made_by;
+  // console.log("title should be here", title);
+  // assessment id = prev id + 1
+  assessmentID = 49;
+  postAssignment.postAssignment(assessmentID, title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res);
 })
 
 app.post("/register",async (req,res)=>{

@@ -11,7 +11,7 @@
 
     <h1>Post Assignment</h1>
     
-    <form id="postAssignment" action="/postAssignment" method="POST">
+    <form id="postAssignment" action="/postAssignment" method="POST" style="height: 800px; overflow-y: scroll; padding: 5px;" enctype="multipart/form-data">
         <div>
             <br> <br>
             <div>
@@ -23,14 +23,14 @@
 
             <div>
                 <h3>Enter Assignment Text</h3>
-                <textarea name="assText" form="postAssignment" placeholder="Enter assignment text here..."></textarea>
+                <input type="text" name="assText" placeholder="Enter assignment text here...">
             </div>
 
             <br> <br>
 
             <div>
-                <h3>Upload any attachement</h3>
-                <input type="file" placeholder="Upload File" name="assFile">
+                <h3>Upload any attachment</h3>
+                <input type="file" placeholder="Upload File" name="assFile" accept="">
             </div>
 
             <br> <br>
@@ -43,7 +43,7 @@
             <br> <br>
 
             <div>
-                <h3>Add the deadline date</h3>
+                <h3>Add the due date</h3>
                 <input type="datetime-local" name="submissionDate">
             </div>
 
@@ -52,12 +52,57 @@
             <div>
                 <h3>Add a release date</h3>
                 <input type="datetime-local" name="releaseDate">
-            </div>
+            </div>          
+            <br> <br>
 
+            <div>
+                <h3>Course Name</h3>
+                <input type="text" placeholder="Course Name" name="courseName">
+            </div>
+        
+            <br><br>
+    
+            <div>
+                <h3>Course Code</h3>
+                <input type="number" placeholder="Course Code" name="courseCode">
+            </div>
+    
+            <br><br>
+    
+            <div>
+                <h3>Year Offered</h3>
+                <input type="number" placeholder="Year Offered" name="year">
+            </div>
+    
+            <br><br>
+            <div>
+                <h3>Semester</h3>
+                <!-- <input type="text" placeholder="Credit Hours" name="credit_hrs"> -->
+    
+                <div class="form-check form-check-inline lead">
+                    <input type="radio" class="form-check-input" id="radio1" name="sem" value="fall" required>
+                    <label class="form-check-label-lg lead" for="radio1">Fall</label>
+                </div>
+    
+                <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                    <input type="radio" class="form-check-input" id="radio2" name="sem" value="spring" checked/>
+                    <label class="form-check-label-lg lead" for="radio2">Spring</label>
+                </div>
+                
+            </div>
+    
+            <br><br>
+            
+            <div>
+                <h3>Enter your Instructor ID</h3>
+                <input type="number" placeholder="Instructor ID" name="made_by">
+            </div>
         </div>
         <br> <br>
         <button type="submit" name="submit">Add Assignment</button>
     </form>
+    <h5><%=message%></h5>
+
     <br> <br>
 </div>
 </div>
@@ -66,6 +111,5 @@
 </div>
 </div>
 </section> 
-    <h5><%=message%></h5>
 </body>
 </html>
