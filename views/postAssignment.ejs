@@ -1,0 +1,71 @@
+<%-include("partials/header");-%>
+<body class="postAssignment" >
+    <section class="vh-100" style="background-image:url('https://cdn.techjuice.pk/wp-content/uploads/2020/11/LUMS-1024x434.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container h-100 w-50">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 10px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+
+    <h1>Post Assignment</h1>
+    
+    <form id="postAssignment" action="/postAssignment" method="POST">
+        <div>
+            <br> <br>
+            <div>
+                <h3>Enter Assignment Title</h3>
+                <input type="text" placeholder="Assignment Title" name="assTitle">
+            </div>
+            
+            <br> <br>
+
+            <div>
+                <h3>Enter Assignment Text</h3>
+                <textarea name="assText" form="postAssignment" placeholder="Enter assignment text here..."></textarea>
+            </div>
+
+            <br> <br>
+
+            <div>
+                <h3>Upload any attachement</h3>
+                <input type="file" placeholder="Upload File" name="assFile">
+            </div>
+
+            <br> <br>
+
+            <div>
+                <h3>Enter total marks of this assignment</h3>
+                <input type="number" placeholder="100" name="assMarks">
+            </div>
+
+            <br> <br>
+
+            <div>
+                <h3>Add the deadline date</h3>
+                <input type="datetime-local" name="submissionDate">
+            </div>
+
+            <br> <br>
+
+            <div>
+                <h3>Add a release date</h3>
+                <input type="datetime-local" name="releaseDate">
+            </div>
+
+        </div>
+        <br> <br>
+        <button type="submit" name="submit">Add Assignment</button>
+    </form>
+    <br> <br>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section> 
+    <h5><%=message%></h5>
+</body>
+</html>

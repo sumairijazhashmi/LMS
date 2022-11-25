@@ -196,6 +196,9 @@ app.post("/instructorhome",(req,res)=>{
   {
     res.render("main", {message: "Logged Out!"});
   }
+  else if(req.body.button == "addAssignment") {
+    res.redirect("/postAssignment");
+  }
   
 });
 
@@ -211,6 +214,10 @@ app.post("/studenthome",(req,res)=>{
   }
   
 });
+
+app.get("/postAssignment", (req, res)=> {
+  res.render("postAssignment", {message: ""});
+})
 
 app.post("/register",async (req,res)=>{
   my_var="";
