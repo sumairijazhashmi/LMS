@@ -16,6 +16,8 @@ const courses=require("./routes/courses");
 const updateProfile=require("./routes/updateProfile");
 const postAssignment = require("./routes/postAssignment");
 const fileUpload = require("express-fileupload");
+const assignmentsTab = require("./routes/assignmentsTab");
+
 
 // authorization\auth.js
 const app = express();
@@ -219,6 +221,9 @@ app.post("/studenthome",(req,res)=>{
   {
     res.render("main", {message: "Logged Out!"});
   }
+  else if(req.body.button == "viewAssignments") {
+    res.redirect("/assignmentsTab");
+  }
   
 });
 
@@ -256,6 +261,19 @@ app.post("/register",async (req,res)=>{
   console.log("hiii");
   console.log(userName, password1,name1,email,password2,radio);
   accounts.addAcc(userName, password1,name1,email,radio,my_var,res);
+});
+
+
+
+app.get("/assignmentsTab", (req, res) => {
+   courseID = 420; // need to somehow store the course's specific ids here
+   sem = "spring";
+   year = 2022;
+   (async () => {
+    let result = await assignmentsTab.assignmentsTab(courseID, year, sem);
+    console.log("here", result)
+    res.render("assignmentsTab", {assignments: result});
+  })();
 });
 
 app.listen(5000,()=>{
