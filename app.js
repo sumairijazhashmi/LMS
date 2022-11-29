@@ -17,6 +17,7 @@ const updateProfile=require("./routes/updateProfile");
 const postAssignment = require("./routes/postAssignment");
 const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
+const feedback = require("./routes/feedback");
 
 
 // authorization\auth.js
@@ -224,7 +225,9 @@ app.post("/studenthome",(req,res)=>{
   else if(req.body.button == "viewAssignments") {
     res.redirect("/assignmentsTab");
   }
-  
+  else if(req.body.button == "viewFeedback") {
+    res.redirect("/viewFeedback");
+  }
 });
 
 app.get("/postAssignment", (req, res)=> {
@@ -275,7 +278,17 @@ app.get("/assignmentsTab", (req, res) => {
     res.render("assignmentsTab", {assignments: result});
   })();
 });
-
+app.get("/viewFeedback", (req, res) => {
+  courseID = 420; // need to somehow store the course's specific ids here
+  sem = "spring";
+  year = 2022;
+  studentID= 6;
+  (async () => {
+   let result = await feedback.feedback(courseID, year, sem, studentID);
+   console.log("here", result)
+   res.render("viewFeedback", {assignments: result});
+ })();
+});
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
 });
