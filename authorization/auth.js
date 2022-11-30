@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv").config();
 
-const login = async (username,password, res) => {
+const login = async (username,password, res, req) => {
     try {
         if (!username || !password) {
             return res.status(400).render("main", {message: "Please provide an email and password"});
@@ -21,14 +21,32 @@ const login = async (username,password, res) => {
             else {
                 if (results[0].role == 'instructor')
                 {
+                    req.session.userinfo = {
+                        username: username,
+                        role: 'instructor',
+                        courseID: null,
+                        sem : null,
+                        year : null
+                    };
                     res.redirect("/instructorhome");
                 }
                 else if (results[0].role == 'admin')
                 {
+                    req.session.userinfo = {
+                        username: username,
+                        role: 'admin',
+                    };
                     res.redirect("/adminHome");
                 }
                 else if (results[0].role == 'student')
                 {
+                    req.session.userinfo = {
+                        username: username,
+                        role: 'student',
+                        courseID: null,
+                        sem : null,
+                        year : null
+                    };
                     res.redirect("/studenthome");
                 }
                 // const token = jwt.sign({ id: results[0].id }, process.env.JWT_SECRET, {

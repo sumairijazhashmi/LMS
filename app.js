@@ -17,6 +17,7 @@ const updateProfile=require("./routes/updateProfile");
 const postAssignment = require("./routes/postAssignment");
 const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
+const feedback = require("./routes/feedback");
 
 
 // authorization\auth.js
@@ -37,7 +38,7 @@ let courseID, sem, year; // please update these in course tab and stuff
 //     console.log("DATABASE CONNECTED")
 //   }
 // })
-
+app.use(express.json());
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
@@ -47,13 +48,33 @@ const { runInNewContext } = require("vm");
 const { concat } = require("lodash");
 const { start } = require("repl");
 
+app.use(cookieParser());
+app.use(
+  session({
+    secret: 'jdsaid28y377321njdFASDQEN87HW123#!@32UDASD132',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      //max age is 20 minutes
+      maxAge: 1000 * 60 * 20 
+    }
+  })
+);
+
+
+
 
 app.get("/main",(req,res)=>{
   res.render("main", {message: ""}); // file name original 
 });
 
 app.get("/adminHome",(req,res)=>{
-  res.render("adminHome", {message: ""}); // file name original 
+  console.log(req.session.userinfo);
+  if(req.session.userinfo && req.session.userinfo.role == 'admin'){
+    res.render("adminhome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
 }
 );
 
@@ -68,7 +89,13 @@ app.get("/addNewCourse",(req,res)=>{
 );
 
 app.get("/studenthome",(req,res)=>{
-  res.render("studenthome", {message: ""}); // file name original 
+  console.log(req.session.userinfo);
+  if(req.session.userinfo && req.session.userinfo.role == 'student'){
+    res.render("studenthome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
+
 }
 );
 
@@ -83,7 +110,12 @@ app.get("/updateProfile",(req,res)=>{
 );
 
 app.get("/instructorhome",(req,res)=>{
-  res.render("instructorhome", {message: ""}); // file name original 
+  console.log(req.session.userinfo);
+  if(req.session.userinfo && req.session.userinfo.role == 'instructor'){
+    res.render("instructorhome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
 }
 );
 
@@ -106,10 +138,7 @@ app.get("/",(req,res)=>{
 app.post("/login",(req,res)=>{
   username = req.body.userID;
   password = req.body.password;
-  // console.log(username);
-  // console.log(password);
-
-  auth.login(username,password,res);
+  auth.login(username,password,res, req);
 }
 );
 
@@ -141,7 +170,8 @@ app.get("/register",(req,res)=>{
 })
 
 app.get("/logout",(req,res)=>{
-  res.render("main", {message: "Logged Out!"});
+  req.session.destroy();
+  res.redirect("main", {message: "Logged Out!"});
 })
 
 app.post("/delete",async (req,res)=>{
@@ -224,7 +254,9 @@ app.post("/studenthome",(req,res)=>{
   else if(req.body.button == "viewAssignments") {
     res.redirect("/assignmentsTab");
   }
-  
+  else if(req.body.button == "viewFeedback") {
+    res.redirect("/viewFeedback");
+  }
 });
 
 app.get("/postAssignment", (req, res)=> {
@@ -275,7 +307,17 @@ app.get("/assignmentsTab", (req, res) => {
     res.render("assignmentsTab", {assignments: result});
   })();
 });
-
+app.get("/viewFeedback", (req, res) => {
+  courseID = 420; // need to somehow store the course's specific ids here
+  sem = "spring";
+  year = 2022;
+  studentID= 6;
+  (async () => {
+   let result = await feedback.feedback(courseID, year, sem, studentID);
+   console.log("here", result)
+   res.render("viewFeedback", {assignments: result});
+ })();
+});
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
 });
