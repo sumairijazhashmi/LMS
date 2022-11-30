@@ -15,6 +15,7 @@ const updatePass=require("./routes/updatePass");
 const courses=require("./routes/courses");
 const updateProfile=require("./routes/updateProfile");
 const postAssignment = require("./routes/postAssignment");
+const uploadResource = require("./routes/addResources");
 const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
 const feedback = require("./routes/feedback");
@@ -317,6 +318,41 @@ app.get("/viewFeedback", (req, res) => {
    console.log("here", result)
    res.render("viewFeedback", {assignments: result});
  })();
+});
+app.get("/uploadResource", (req, res) => {
+  res.render('uploadResource',
+  {
+    message:''
+  })
+});
+app.post("/uploadResource", (req, res) => {
+  file = req.files.resFile
+  title = req.body.resTitle
+
+  //replace these dummy values with session values
+  resource_id = 0
+  course_id=0
+  resource_type="lectures"
+  year_offered=2022
+  sem_offered="spring"
+  instructorID= 0
+  uploadResource.uploadResource(resource_id, course_id, resource_type, year_offered, sem_offered, instructorID, file, res,title)
+  /* For testing
+  file.mv('./public/resources/'+file.name, async function(err) {
+    if(err)
+    {
+      console.log(err)
+    }
+    else
+    {
+    console.log("uploaded---")
+    res.render('uploadResource',
+    {
+      message:'Resource Uploaded.'
+    })
+    }
+  }) 
+  */
 });
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
