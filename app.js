@@ -22,6 +22,7 @@ const feedback = require("./routes/feedback");
 const student_course=require("./routes/student_course");
 const CreateAnnouncement = require("./routes/CreateAnnouncement");
 const postFeedback = require("./routes/postFeedback");
+const submitAssignment = require("./routes/submitAssignment");
 
 
 // authorization\auth.js
@@ -390,6 +391,21 @@ app.get("/assignmentsTab", (req, res) => {
     res.render("assignmentsTab", {assignments: result});
   })();
 });
+
+app.post("/assignmentsTab", (req, res) => {
+
+  if(req.body.button == "SubmitAss") {
+    courseID = 420; // need to somehow store the course's specific ids here
+    sem = "spring";
+    year = 2022;
+    studentID = 421;
+    assessmentID = 1; 
+    file = req.files.assFile;
+    file_name = file.name;
+    submitAssignment.submitAssignment(courseID, year, sem, assessmentID, studentID, file, file_name, res);
+  }
+});
+
 app.get("/viewFeedback", (req, res) => {
   courseID = 420; // need to somehow store the course's specific ids here
   sem = "spring";
