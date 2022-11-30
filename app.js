@@ -21,6 +21,7 @@ const assignmentsTab = require("./routes/assignmentsTab");
 const feedback = require("./routes/feedback");
 const student_course=require("./routes/student_course");
 const CreateAnnouncement = require("./routes/CreateAnnouncement");
+const postFeedback = require("./routes/postFeedback");
 
 
 // authorization\auth.js
@@ -280,6 +281,9 @@ app.post("/instructorhome",(req,res)=>{
   else if(req.body.button == "addAssignment") {
     res.redirect("/postAssignment");
   }
+  else if(req.body.button == "postFeedback") {
+    res.redirect("/postFeedback");
+  }
   
 });
 
@@ -299,6 +303,22 @@ app.post("/studenthome",(req,res)=>{
   else if(req.body.button == "viewFeedback") {
     res.redirect("/viewFeedback");
   }
+});
+
+app.get("/postFeedback", (req, res)=> {
+  res.render("postFeedback", {message: ""});
+})
+app.post("/postFeedback",(req,res)=>{
+
+  userID = req.body.userID
+  courseID = req.body.courseID
+  year = req.body.year
+  sem = req.body.sem
+  score = req.body.score
+
+
+  postFeedback.postFeedback(userID, courseID, year, sem, score, res)
+  
 });
 
 app.get("/postAssignment", (req, res)=> {
