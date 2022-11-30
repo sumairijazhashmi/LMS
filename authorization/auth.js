@@ -14,7 +14,7 @@ const login = async (username,password, res, req) => {
             // if (results.length === 0 || !(await bcrypt.compare(password, results[0].password))) {
             //     res.status(401).render("main", {message: "Username or Password is incorrect"});
             // } 
-    
+            console.log(results);
             if (results.length === 0 || password != results[0].password) {
                 res.status(401).render("main", {message: "Username or Password is incorrect"});
             } 

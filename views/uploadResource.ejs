@@ -1,0 +1,47 @@
+<%-include("partials/header");-%>
+<body class="postAssignment" >
+    <section class="vh-100" style="background-image:url('https://cdn.techjuice.pk/wp-content/uploads/2020/11/LUMS-1024x434.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container h-100 w-50">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 10px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <!--<link rel="stylesheet" href="/css/styles.css" type="text/css">-->
+
+    <h1>Upload Resource</h1>
+    
+    <form action="/uploadResource" method="POST" enctype="multipart/form-data">
+        <div>
+            <br> <br>
+            <div class="form-outline mb-4">
+                
+                <h3 class="justify-content-center">Title</h3>
+                <input class="form-control form-control-lg" type="text" placeholder="Assignment Title" name="resTitle">
+            </div>
+            
+            <br> <br>
+
+            <div class="form-outline mb-4">
+                <h3>Upload any attachment</h3>
+                <input class="form-control form-control-lg" type="file" placeholder="Upload File" name="resFile" accept="">
+            </div>
+
+        </div>
+        <br> <br>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-primary btn-lg" type="submit" name="submit">Add Resource</button>
+        </div>
+    </form>
+    <br> <br>
+    <br> <br>
+    <h5><%=message%></h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section> 
+</body>
+</html>

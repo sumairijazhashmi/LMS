@@ -15,9 +15,11 @@ const updatePass=require("./routes/updatePass");
 const courses=require("./routes/courses");
 const updateProfile=require("./routes/updateProfile");
 const postAssignment = require("./routes/postAssignment");
+const uploadResource = require("./routes/addResources");
 const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
 const feedback = require("./routes/feedback");
+const postFeedback = require("./routes/postFeedback");
 
 
 // authorization\auth.js
@@ -238,6 +240,9 @@ app.post("/instructorhome",(req,res)=>{
   else if(req.body.button == "addAssignment") {
     res.redirect("/postAssignment");
   }
+  else if(req.body.button == "postFeedback") {
+    res.redirect("/postFeedback");
+  }
   
 });
 
@@ -262,7 +267,21 @@ app.post("/studenthome",(req,res)=>{
 app.get("/postAssignment", (req, res)=> {
   res.render("postAssignment", {message: ""});
 })
+app.get("/postFeedback", (req, res)=> {
+  res.render("postFeedback", {message: ""});
+})
+app.post("/postFeedback",(req,res)=>{
 
+  userID = req.body.userID
+  courseID = req.body.courseID
+  year = req.body.year
+  sem = req.body.sem
+  score = req.body.score
+
+
+  postFeedback.postFeedback(userID, courseID, year, sem, score, res)
+  
+});
 app.post("/postAssignment", (req, res)=> {
   title = req.body.assTitle;
   text = req.body.assText;
@@ -317,6 +336,41 @@ app.get("/viewFeedback", (req, res) => {
    console.log("here", result)
    res.render("viewFeedback", {assignments: result});
  })();
+});
+app.get("/uploadResource", (req, res) => {
+  res.render('uploadResource',
+  {
+    message:''
+  })
+});
+app.post("/uploadResource", (req, res) => {
+  file = req.files.resFile
+  title = req.body.resTitle
+
+  //replace these dummy values with session values
+  resource_id = 0
+  course_id=0
+  resource_type="lectures"
+  year_offered=2022
+  sem_offered="spring"
+  instructorID= 0
+  uploadResource.uploadResource(resource_id, course_id, resource_type, year_offered, sem_offered, instructorID, file, res,title)
+  /* For testing
+  file.mv('./public/resources/'+file.name, async function(err) {
+    if(err)
+    {
+      console.log(err)
+    }
+    else
+    {
+    console.log("uploaded---")
+    res.render('uploadResource',
+    {
+      message:'Resource Uploaded.'
+    })
+    }
+  }) 
+  */
 });
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
