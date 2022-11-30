@@ -65,7 +65,12 @@ app.get("/main",(req,res)=>{
 });
 
 app.get("/adminHome",(req,res)=>{
-  res.render("adminHome", {message: ""}); // file name original 
+  console.log(req.session.userinfo);
+  if(req.session.userinfo && req.session.userinfo.role == 'admin'){
+    res.render("adminhome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
 }
 );
 
@@ -88,7 +93,7 @@ app.get("/studenthome",(req,res)=>{
   //   response.send(cart);
   // }
   console.log(req.session.userinfo);
-  if(req.session.userinfo){
+  if(req.session.userinfo && req.session.userinfo.role == 'student'){
     res.render("studenthome", {message: ""}); // file name original 
   } else {
     res.redirect("/main");
@@ -108,7 +113,12 @@ app.get("/updateProfile",(req,res)=>{
 );
 
 app.get("/instructorhome",(req,res)=>{
-  res.render("instructorhome", {message: ""}); // file name original 
+  console.log(req.session.userinfo);
+  if(req.session.userinfo && req.session.userinfo.role == 'instructor'){
+    res.render("instructorhome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
 }
 );
 
