@@ -1,0 +1,89 @@
+<%-include("partials/header");-%>
+<body class="CreateAnnouncement" >
+    <section class="vh-100" style="background-image:url('https://cdn.techjuice.pk/wp-content/uploads/2020/11/LUMS-1024x434.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container h-100 w-50">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 10px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+
+    <h1>Create Announcement</h1>
+    
+    <form id="CreateAnnouncement" action="/CreateAnnouncement" method="POST" style="height: 800px; overflow-y: scroll; padding: 5px;" enctype="multipart/form-data">
+        <div>
+            <br> <br>
+            <div class="form-outline mb-4">
+                
+                <h3>Enter Announcement Title</h3>
+                <input class="form-control" type="text" placeholder="Announcement Title" name="AnnouncementTitle">
+            </div>
+            
+            <br> <br>
+
+            <div class="form-outline mb-4">
+                <h3>Enter Announcement Text</h3>
+                <input class="form-control" type="text" name="AnnouncementText" placeholder="Enter Announcement text here...">
+            </div>
+
+            <br> <br>
+
+            <div class="form-outline mb-4">
+                <h3>Course Name</h3>
+                <input class="form-control" type="text" placeholder="Course Name" name="courseName">
+            </div>
+        
+            <br><br>
+    
+            <div class="form-outline mb-4">
+                <h3>Course Code</h3>
+                <input class="form-control" type="number" placeholder="Course Code" name="courseCode">
+            </div>
+    
+            <br><br>
+    
+            <div class="form-outline mb-4">
+                <h3>Year Offered</h3>
+                <input class="form-control" type="number" placeholder="Year Offered" name="year">
+            </div>
+    
+            <br><br>
+            <div class="form-outline mb-4">
+                <h3>Semester</h3>
+                <!-- <input type="text" placeholder="Credit Hours" name="credit_hrs"> -->
+    
+                <div class="form-check form-check-inline lead">
+                    <input type="radio" class="form-check-input" id="radio1" name="sem" value="fall" required>
+                    <label class="form-check-label-lg lead" for="radio1">Fall</label>
+                </div>
+    
+                <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                    <input type="radio" class="form-check-input" id="radio2" name="sem" value="spring" checked/>
+                    <label class="form-check-label-lg lead" for="radio2">Spring</label>
+                </div>
+                
+            </div>
+    
+            <br><br>
+            
+            <div class="form-outline mb-4">
+                <h3>Enter your Instructor ID</h3>
+                <input class="form-control" type="number" placeholder="Instructor ID" name="made_by">
+            </div>
+        </div>
+        <br> <br>
+        <button type="submit" name="submit">Add Announcement</button>
+    </form>
+    <h5><%=message%></h5>
+
+    <br> <br>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section> 
+</body>
+</html>

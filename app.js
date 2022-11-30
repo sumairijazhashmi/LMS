@@ -20,6 +20,7 @@ const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
 const feedback = require("./routes/feedback");
 const student_course=require("./routes/student_course");
+const CreateAnnouncement = require("./routes/CreateAnnouncement");
 
 
 // authorization\auth.js
@@ -322,6 +323,27 @@ app.post("/postAssignment", (req, res)=> {
   assessmentID = 49;
   postAssignment.postAssignment(assessmentID, title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res);
 })
+
+app.get("/CreateAnnouncement", (req, res)=> {
+  res.render("CreateAnnouncement", {message: ""});
+})
+
+app.post("/CreateAnnouncement", (req, res)=> {
+
+  
+  title = req.body.AnnouncementTitle;
+  text = req.body.AnnouncementText;
+  course_name = req.body.courseName;
+  course_code = req.body.courseCode;
+  year = req.body.year;
+  sem = req.body.sem;
+  made_by = req.body.made_by;
+  // console.log("title should be here", title);
+  // assessment id = prev id + 1
+  // assessmentID = 49;
+  CreateAnnouncement.CreateAnnouncement(title, text, course_name, course_code,year, sem, made_by, res);
+})
+
 
 app.post("/register",async (req,res)=>{
   my_var="";
