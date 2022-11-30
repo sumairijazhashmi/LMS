@@ -1,0 +1,51 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Navbar brand -->
+        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/en/3/38/Lahore_University_of_Management_Sciences_Logo.svg"
+            height="50"
+            alt="LUMS logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+  
+      <!-- Right elements -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- need to remove this tab from here when courses have been made -->
+        <li class="nav-item">
+            <form action="/studenthome" method="POST">
+            <button type="submit" name="button" value="updatePassword">Update Password</button>
+            </form>
+        </li>
+        <li class="nav-item">
+            <form action="/studenthome" method="POST">
+            <button type="submit" name="button" value="logout">Log Out</button>
+            </form>
+        </li>
+    </ul>
+
+  </div>
+
+</nav>

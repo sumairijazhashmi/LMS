@@ -1,36 +1,140 @@
 <%-include("partials/header");-%>
-<body class="mainpage">
-    <link rel="stylesheet" href="/css/styles.css" type="text/css">
-    <h1>Welcome to LMS (Student)</h1>
+<%-include("partials/navbar");-%>
 
-    <form action="/studenthome" method="POST">
+    <body class="mainpage">
+        <link rel="stylesheet" href="/css/styles.css" type="text/css">
+        <h1>Welcome to LMS (Student)</h1>
 
-        <!-- need to remove this tab from here when courses have been made -->
-        <div>
-            <button type="submit" name="button" value="viewAssignments">View Assignments</button>  
-        </div>
-        
-        <br> <br>
+        <!-- <form action="/studenthome" method="POST"> -->
 
-        <div>
-            <button type="submit" name="button" value="viewFeedback">View Feedback</button>  
-        </div>
-        
-        <br> <br>
+            <!-- need to remove this tab from here when courses have been made -->
+            <!-- <div>
+                <button type="submit" name="button" value="viewAssignments">View Assignments</button>
+            </div>
 
-        <div>
-            <button type="submit" name="button" value="updatePassword">Update Password</button>  
-        </div>
-          
-        <br> <br>
+            <br> <br>
 
-        <div>
-            <button type="submit" name="button" value="logout">Login Out</button>    
-        </div>
+            <div>
+                <button type="submit" name="button" value="viewFeedback">View Feedback</button>
+            </div>
 
+            <br> <br>
+
+            <div>
+                <button type="submit" name="button" value="updatePassword">Update Password</button>
+            </div>
+
+            <br> <br>
+
+            <div>
+                <button type="submit" name="button" value="logout">Login Out</button>
+            </div>
+
+            <br>
+        </form> -->
+        <section>
+            <h1 style="text-align:center"> Year 1</h1>
+            <section>
+                <h2 class="section-title">Fall</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-header">
+                            <h3>Course ID</h3>
+                          </div>
+                          <div class="card-body">
+                            <h2>Course ID</h2>
+                            <h5>Assignments</h5>
+                            <h5>Roster</h5>
+                            <h5>Announcements </h5>
+                            <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                          </div>
+    
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-header">
+                            <h3>Course ID</h3>
+                          </div>
+                          <div class="card-body">
+                            <h2>Course ID</h2>
+                            <h5>Assignments</h5>
+                            <h5>Roster</h5>
+                            <h5>Announcements </h5>
+                            <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                          </div>
+    
+                    </div>
+                </div>
+            </section>
+            <br>
+            <section>
+                <h2 class="section-title">Spring</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-header">
+                            <h3>Course ID</h3>
+                          </div>
+                          <div class="card-body">
+                            <h2>Course ID</h2>
+                            <h5>Assignments</h5>
+                            <h5>Roster</h5>
+                            <h5>Announcements </h5>
+                            <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                          </div>
+    
+                    </div>
+                </div>
+            </section>
+
+        </section>
         <br>
-    </form>
-    <h3><%=message%></h3>
-    <!-- <<script src="/js/index.js"></script> -->
-</body>
-</html>
+        <section>
+            <!-- center the h1 heading -->
+            <h1 style="text-align:center"> Year 2</h1>
+            <section>
+                <h2 class="section-title">Fall</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-header">
+                            <h3>Course ID</h3>
+                          </div>
+                          <div class="card-body">
+                            <h2>Course ID</h2>
+                            <h5>Assignments</h5>
+                            <h5>Roster</h5>
+                            <h5>Announcements </h5>
+                            <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                          </div>
+    
+                    </div>
+                </div>
+            </section>
+            <br>
+            <section>
+                <h2 class="section-title">Spring</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card-header">
+                            <h3>Course ID</h3>
+                          </div>
+                          <div class="card-body">
+                            <h2>Course ID</h2>
+                            <h5>Assignments</h5>
+                            <h5>Roster</h5>
+                            <h5>Announcements </h5>
+                            <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                          </div>
+    
+                    </div>
+                </div>
+            </section>
+
+        </section>
+        
+
+        <h3>
+            <%=message%>
+        </h3>
+        <!-- <<script src="/js/index.js"></script> -->
+    </body>
+
+    </html>

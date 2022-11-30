@@ -44,6 +44,7 @@ button {
   max-width: 100%;
   overflow: visible;
   padding: 2px 24px;
+  margin: 20px;
   text-align: center;
 
 }
