@@ -11,12 +11,13 @@ const login = async (username,password, res, req) => {
         }
 
         lms_db.query("SELECT * FROM Account WHERE username = ?", [username], async (error, results) => {
-            // if (results.length === 0 || !(await bcrypt.compare(password, results[0].password))) {
-            //     res.status(401).render("main", {message: "Username or Password is incorrect"});
-            // } 
-    
-            if (results.length === 0 || password != results[0].password) {
+            if (results.length === 0 || !(await bcrypt.compare(password, results[0].password))) {
                 res.status(401).render("main", {message: "Username or Password is incorrect"});
+                // destroy the session if it exists
+                if (req.session) {
+                    req.session.destroy();
+                    console.log("destroyed session");
+                }
             } 
             else {
                 if (results[0].role == 'instructor')

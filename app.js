@@ -47,6 +47,7 @@ const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const { runInNewContext } = require("vm");
 const { concat } = require("lodash");
 const { start } = require("repl");
+const { query } = require("express");
 
 app.use(cookieParser());
 app.use(
@@ -65,6 +66,15 @@ app.use(
 
 
 app.get("/main",(req,res)=>{
+  let query  = `SELECT * from Student;`;
+  db.query (query, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      console.log(result);
+    }
+  });
   res.render("main", {message: ""}); // file name original 
 });
 

@@ -1,5 +1,8 @@
 
 const connectionString = require ("../db_config/db");
+// require bcrypt for password hashing
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
@@ -82,22 +85,24 @@ async function addAcc (userName, password1,name1,email,radio,my_var,res)
   }
   else
   {
-    let query = `insert into Account (username, password, role, email, name) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
+    const salt = await bcrypt.genSaltSync(saltRounds);
+    hashedPassword = await bcrypt.hash(password1, salt);
+    let query = `insert into Account (username, password, role, email, name) values("${userName}","${hashedPassword}", "${radio}","${email}", "${name1}")`;
     await seedData(query);
     if (radio=="instructor")
     {
-      let query = `insert into Instructor (instructor_id, password, role, email, name) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
+      let query = `insert into Instructor (instructor_id, password, role, email, name) values("${userName}","${hashedPassword}", "${radio}","${email}", "${name1}")`;
     await seedData(query);
     console.log("instructor added")
     }
     else if (radio=="student"){
-      let query = `insert into Student (student_id, password, role, email, name) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
+      let query = `insert into Student (student_id, password, role, email, name) values("${userName}","${hashedPassword}", "${radio}","${email}", "${name1}")`;
     await seedData(query);
     console.log("student added")
     }
     else
     {
-      let query = `insert into Admin (admin_id, password, role, email, name) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
+      let query = `insert into Admin (admin_id, password, role, email, name) values("${userName}","${hashedPassword}", "${radio}","${email}", "${name1}")`;
       await seedData(query);
       console.log("admin added") 
     }
