@@ -38,7 +38,7 @@ let courseID, sem, year; // please update these in course tab and stuff
 //     console.log("DATABASE CONNECTED")
 //   }
 // })
-
+app.use(express.json());
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
@@ -47,6 +47,17 @@ const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const { runInNewContext } = require("vm");
 const { concat } = require("lodash");
 const { start } = require("repl");
+
+app.use(cookieParser());
+app.use(
+  session({
+    secret: 'jdsaid28y377321njdFASDQEN87HW123#!@32UDASD132',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+
 
 
 app.get("/main",(req,res)=>{
@@ -69,7 +80,20 @@ app.get("/addNewCourse",(req,res)=>{
 );
 
 app.get("/studenthome",(req,res)=>{
-  res.render("studenthome", {message: ""}); // file name original 
+  //  const { cart } = request.session;
+  // console.log('Cart');
+  // if (!cart) {
+  //   response.send('You have no cart session');
+  // } else {
+  //   response.send(cart);
+  // }
+  console.log(req.session.userinfo);
+  if(req.session.userinfo){
+    res.render("studenthome", {message: ""}); // file name original 
+  } else {
+    res.redirect("/main");
+  }
+
 }
 );
 
@@ -107,10 +131,7 @@ app.get("/",(req,res)=>{
 app.post("/login",(req,res)=>{
   username = req.body.userID;
   password = req.body.password;
-  // console.log(username);
-  // console.log(password);
-
-  auth.login(username,password,res);
+  auth.login(username,password,res, req);
 }
 );
 
