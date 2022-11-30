@@ -85,13 +85,6 @@ app.get("/addNewCourse",(req,res)=>{
 );
 
 app.get("/studenthome",(req,res)=>{
-  //  const { cart } = request.session;
-  // console.log('Cart');
-  // if (!cart) {
-  //   response.send('You have no cart session');
-  // } else {
-  //   response.send(cart);
-  // }
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'student'){
     res.render("studenthome", {message: ""}); // file name original 
@@ -173,7 +166,8 @@ app.get("/register",(req,res)=>{
 })
 
 app.get("/logout",(req,res)=>{
-  res.render("main", {message: "Logged Out!"});
+  req.session.destroy();
+  res.redirect("main", {message: "Logged Out!"});
 })
 
 app.post("/delete",async (req,res)=>{
