@@ -24,7 +24,9 @@ const login = async (username,password, res, req) => {
                     req.session.userinfo = {
                         username: username,
                         role: 'instructor',
-                        courseID: null
+                        courseID: null,
+                        sem : null,
+                        year : null
                     };
                     res.redirect("/instructorhome");
                 }
@@ -33,7 +35,6 @@ const login = async (username,password, res, req) => {
                     req.session.userinfo = {
                         username: username,
                         role: 'admin',
-                        courseID: null
                     };
                     res.redirect("/adminHome");
                 }
@@ -42,7 +43,9 @@ const login = async (username,password, res, req) => {
                     req.session.userinfo = {
                         username: username,
                         role: 'student',
-                        courseID: null
+                        courseID: null,
+                        sem : null,
+                        year : null
                     };
                     res.redirect("/studenthome");
                 }
