@@ -1,0 +1,32 @@
+<%-include("partials/header");-%>
+<body class="addNewCourse">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <h1>Remove User from Course</h1>
+
+
+    <form action="/del_student_course" method="POST">
+    <div>
+
+        <div>
+            <h3>Course Code</h3>
+            <input type="number" placeholder="Course Code" name="courseCode">
+        </div>
+
+        <br><br>
+
+        <div>
+            <h3>Student ID</h3>
+            <input type="text" placeholder="Student ID" name="studentID">
+        </div>
+
+        <br><br>
+
+        <div>
+            <button type="submit" >Confirm</button>
+        </div>   
+    </div>
+    </form>
+    <h3><%=message%></h3>
+    <!-- <<script src="/js/index.js"></script> -->
+</body>
+</html>

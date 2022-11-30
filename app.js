@@ -19,6 +19,7 @@ const uploadResource = require("./routes/addResources");
 const fileUpload = require("express-fileupload");
 const assignmentsTab = require("./routes/assignmentsTab");
 const feedback = require("./routes/feedback");
+const student_course=require("./routes/student_course");
 
 
 // authorization\auth.js
@@ -86,6 +87,22 @@ app.get("/updatePassword",(req,res)=>{
 
 app.get("/addNewCourse",(req,res)=>{
   res.render("addNewCourse", {message: ""}); // file name original 
+}
+);
+
+app.get("/student_course",(req,res)=>{
+  res.render("student_course", {message: ""}); // file name original 
+}
+);
+
+app.get("/searchCourse",(req,res)=>{
+  res.render("searchCourse", {message: ""}); // file name original 
+}
+);
+
+
+app.get("/del_student_course",(req,res)=>{
+  res.render("del_student_course", {message: ""}); // file name original 
 }
 );
 
@@ -214,6 +231,29 @@ app.post("/addNewCourse",(req,res)=>{
   credit_hrs = req.body.credit_hrs
 
   courses.addCourse(courseName, courseCode, instructor, year, semmester, credit_hrs, res)
+  
+});
+
+app.post("/student_course",(req,res)=>{
+
+  courseID = req.body.courseCode
+  studentID = req.body.studentID
+  year = req.body.year
+  semmester = req.body.sem
+  instructor = req.body.instructor
+
+
+  student_course.addCourseToStudent(courseID, studentID, year, semmester , instructor, res)
+  
+});
+
+app.post("/del_student_course",(req,res)=>{
+
+  courseID = req.body.courseCode
+  studentID = req.body.studentID
+
+
+  student_course.delCourseFromStudent(courseID, studentID, res)
   
 });
 

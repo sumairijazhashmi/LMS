@@ -1,0 +1,63 @@
+<%-include("partials/header");-%>
+<body class="addNewCourse">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <h1>Add User to Course</h1>
+
+
+    <form action="/student_course" method="POST">
+    <div>
+
+        <div>
+            <h3>Course Code</h3>
+            <input type="number" placeholder="Course Code" name="courseCode">
+        </div>
+
+        <br><br>
+
+        <div>
+            <h3>Year Offered</h3>
+            <input type="number" placeholder="Year Offered" name="year">
+        </div>
+
+        <br><br>
+
+        <div>
+            <h3>Semester</h3>
+            <!-- <input type="text" placeholder="Credit Hours" name="credit_hrs"> -->
+
+            <div class="form-check form-check-inline lead">
+                <input type="radio" class="form-check-input" id="radio1" name="sem" value="fall" required>
+                <label class="form-check-label-lg lead" for="radio1">Fall</label>
+            </div>
+
+            <div class="form-check form-check-inline mx-4 mb-3 mb-lg-4 lead">
+                <input type="radio" class="form-check-input" id="radio2" name="sem" value="spring" checked/>
+                <label class="form-check-label-lg lead" for="radio2">Spring</label>
+            </div>
+            
+        </div>
+
+
+        <div>
+            <h3>Student ID</h3>
+            <input type="text" placeholder="Student ID" name="studentID">
+        </div>
+
+        <br><br>
+
+        <div>
+            <h3>Instructor ID</h3>
+            <input type="number" placeholder="Course Code" name="instructor">
+        </div>
+
+        <br><br>
+
+        <div>
+            <button type="submit" >Confirm</button>
+        </div>   
+    </div>
+    </form>
+    <h3><%=message%></h3>
+    <!-- <<script src="/js/index.js"></script> -->
+</body>
+</html>
