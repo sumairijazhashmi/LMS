@@ -23,6 +23,7 @@ const student_course=require("./routes/student_course");
 const CreateAnnouncement = require("./routes/CreateAnnouncement");
 const postFeedback = require("./routes/postFeedback");
 const submitAssignment = require("./routes/submitAssignment");
+const viewCourses = require("./routes/viewCourses");
 
 
 // authorization\auth.js
@@ -52,6 +53,7 @@ const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const { runInNewContext } = require("vm");
 const { concat } = require("lodash");
 const { start } = require("repl");
+// const { viewCourses } = require("./routes/viewCourses");
 
 app.use(cookieParser());
 app.use(
@@ -112,13 +114,20 @@ app.get("/del_student_course",(req,res)=>{
 app.get("/studenthome",(req,res)=>{
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'student'){
-    res.render("studenthome", {message: ""}); // file name original 
+    // call the viewCourses function
+    viewCourses.viewCourses(req.session.userinfo.username, req.session.userinfo.role, res);
   } else {
     res.redirect("/main");
   }
-
 }
 );
+//     res.render("studenthome", {message: ""}); // file name original 
+//   } else {
+//     res.redirect("/main");
+//   }
+
+// }
+// );
 
 app.get("/removeExistingCourse",(req,res)=>{
   res.render("removeExistingCourse", {message: ""}); // file name original 

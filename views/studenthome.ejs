@@ -1,36 +1,78 @@
 <%-include("partials/header");-%>
-<body class="mainpage">
-    <link rel="stylesheet" href="/css/styles.css" type="text/css">
-    <h1>Welcome to LMS (Student)</h1>
+<%-include("partials/navbar");-%>
 
-    <form action="/studenthome" method="POST">
+    <body class="mainpage">
+        <link rel="stylesheet" href="/css/styles.css" type="text/css">
+        <h1>Welcome to LMS (Student)</h1>
 
-        <!-- need to remove this tab from here when courses have been made -->
-        <div>
-            <button type="submit" name="button" value="viewAssignments">View Assignments</button>  
-        </div>
+        <!-- <form action="/studenthome" method="POST"> -->
+
+            <!-- need to remove this tab from here when courses have been made -->
+            <!-- <div>
+                <button type="submit" name="button" value="viewAssignments">View Assignments</button>
+            </div>
+            <br> <br>
+            <div>
+                <button type="submit" name="button" value="viewFeedback">View Feedback</button>
+            </div>
+            <br> <br>
+            <div>
+                <button type="submit" name="button" value="updatePassword">Update Password</button>
+            </div>
+            <br> <br>
+            <div>
+                <button type="submit" name="button" value="logout">Login Out</button>
+            </div>
+            <br>
+        </form> -->
+        <!-- <% Object.keys(courses).forEach(function(x){ %>
+            do another object.keys to access each attribute of each course
+            <% Object.keys(courses[x]).forEach(function(y){ %>
+                <h3>
+                    <%=JSON.stringify(courses[x][y].name)%>
+                </h3>
+                <% }); %>
+        <% }); %> -->
+
+        <section>
+            <% Object.keys(courses).forEach(function(x){ %>
+                <h1 style="text-align:center">
+                    <%=x%>
+                </h1>
+                <% Object.keys(courses[x]).forEach(function(y){ %>
+                    <section>
+                        <h2 class="section-title"><%=y%></h2>
+                        
+                    </section>
+                    <!-- do another object.keys to access each semester of each year-->
+                    <% Object.keys(courses[x][y]).forEach(function(z){ %>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card-header">
+                                    <h3>Course: <%=courses[x][y][z].name%></h3>
+                                  </div>
+                                  <div class="card-body">
+                                    <h5>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h5>
+                                    <h5>Assignments</h5>
+                                    <h5>Roster</h5>
+                                    <h5>Announcements </h5>
+                                    <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                                  </div>
+            
+                            </div>
+                        </div>
+                    <% }); %>
+
+                    <h1 style="text-align:center">
+                        <!-- <%=JSON.stringify(courses[x][y])%> -->
+                    </h1>
+                    </section>
+                    <br>
+                    <% }); %>
+            <% }); %>
+        </section>
         
-        <br> <br>
+        <!-- <<script src="/js/index.js"></script> -->
+    </body>
 
-        <div>
-            <button type="submit" name="button" value="viewFeedback">View Feedback</button>  
-        </div>
-        
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="updatePassword">Update Password</button>  
-        </div>
-          
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="logout">Login Out</button>    
-        </div>
-
-        <br>
-    </form>
-    <h3><%=message%></h3>
-    <!-- <<script src="/js/index.js"></script> -->
-</body>
-</html>
+    </html>
