@@ -67,7 +67,6 @@ const viewCourses = async (user_id, role, res) => {
                     {
                         if (x[k].year_offered == years[i] && x[k].sem_offered == semesters[j])
                         {
-                            console.log(x[k])
                             courses[years[i]][semesters[j]].push(x[k])
                         }
                     }

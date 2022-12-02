@@ -6,8 +6,6 @@
         <h1>Welcome to LMS (Student)</h1>
 
         <!-- <form action="/studenthome" method="POST"> -->
-
-            <!-- need to remove this tab from here when courses have been made -->
             <!-- <div>
                 <button type="submit" name="button" value="viewAssignments">View Assignments</button>
             </div>
@@ -37,7 +35,7 @@
         <section>
             <% Object.keys(courses).forEach(function(x){ %>
                 <h1 style="text-align:center">
-                    <%=x%>
+                    Year <%=x%>
                 </h1>
                 <% Object.keys(courses[x]).forEach(function(y){ %>
                     <section>
@@ -53,9 +51,20 @@
                                   </div>
                                   <div class="card-body">
                                     <h5>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h5>
-                                    <h5>Assignments</h5>
-                                    <h5>Roster</h5>
-                                    <h5>Announcements </h5>
+                                    <form action="/studenthome" method="POST">
+                                        <div>
+                                            <button type="submit" name="button" value="viewAssignments">View Assignments</button>
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <button type="submit" name="button" value="viewRoster">Roster</button>
+                                        </div>
+                                        <br>  
+                                        <div>
+                                            <button type="submit" name="button" value="viewAnnouncements">Announcements</button>
+                                        </div>
+                                        <br> 
+                                    </form>
                                     <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
                                   </div>
             
