@@ -50,20 +50,26 @@
                                     <h3>Course: <%=courses[x][y][z].name%></h3>
                                   </div>
                                   <div class="card-body">
-                                    <h5>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h5>
+                                    <h4>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h4>
                                     <form action="/studenthome" method="POST">
                                         <div>
-                                            <button type="submit" name="button" value="viewAssignments">View Assignments</button>
+                                            <button type="submit" name="button" value="viewAnnouncements" style="margin: 8px; height: 35px;">Announcements</button>
+                                        </div>
+                                        <br> 
+                                        <div>
+                                            <button type="submit" name="button" value="viewAssignments" style="margin: 8px; height: 35px;">Assignments</button>
                                         </div>
                                         <br>
                                         <div>
-                                            <button type="submit" name="button" value="viewRoster">Roster</button>
+                                            <button type="submit" name="button" value="viewRoster" style="margin: 8px; height: 35px;">Resources</button>
                                         </div>
                                         <br>  
                                         <div>
-                                            <button type="submit" name="button" value="viewAnnouncements">Announcements</button>
+                                            <button type="submit" name="button" value="viewRoster" style="margin: 8px; height: 35px;">Roster</button>
                                         </div>
-                                        <br> 
+                                        <br>
+                    
+                                        
                                     </form>
                                     <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
                                   </div>
