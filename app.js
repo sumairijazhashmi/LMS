@@ -280,6 +280,7 @@ app.post("/removeExistingCourse",(req,res)=>{
 
 app.post("/instructorhome",(req,res)=>{
 
+  console.log(req.body.button);
   if(req.body.button == 'updatePassword')
   {
     res.redirect("/updatePassword");
@@ -299,6 +300,9 @@ app.post("/instructorhome",(req,res)=>{
 
 app.post("/studenthome",(req,res)=>{
 
+  console.log(req.body.button);
+  // req.body.button is a json object with two values tab and course_id
+  // parse the object
   if(req.body.button == 'updatePassword')
   {
     res.redirect("/updatePassword");
@@ -307,11 +311,33 @@ app.post("/studenthome",(req,res)=>{
   {
     res.render("main", {message: "Logged Out!"});
   }
-  else if(req.body.button == "viewAssignments") {
-    res.redirect("/assignmentsTab");
-  }
-  else if(req.body.button == "viewFeedback") {
-    res.redirect("/viewFeedback");
+  else{
+    var obj = JSON.parse(req.body.button);
+    console.log(obj.tab);
+    if(obj.tab == "viewAssignments") {
+      req.session.userinfo.courseID = obj.course_id;
+      req.session.userinfo.sem = obj.sem;
+      req.session.userinfo.year = obj.year;
+      res.redirect("/assignmentsTab");
+    }
+    else if(obj.tab == "viewResources") {
+      req.session.userinfo.courseID = obj.course_id;
+      req.session.userinfo.sem = obj.sem;
+      req.session.userinfo.year = obj.year;
+      res.redirect("/viewResources");
+    }
+    else if(obj.tab == "viewAnnouncements") {
+      req.session.userinfo.courseID = obj.course_id;
+      req.session.userinfo.sem = obj.sem;
+      req.session.userinfo.year = obj.year;
+      res.redirect("/viewAnnouncements");
+    }
+    else if(obj.tab == "viewRoster") {
+      req.session.userinfo.courseID = obj.course_id;
+      req.session.userinfo.sem = obj.sem;
+      req.session.userinfo.year = obj.year;
+      res.redirect("/viewRoster");
+    }
   }
 });
 
