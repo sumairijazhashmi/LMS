@@ -24,6 +24,8 @@ const CreateAnnouncement = require("./routes/CreateAnnouncement");
 const postFeedback = require("./routes/postFeedback");
 const submitAssignment = require("./routes/submitAssignment");
 const viewCourses = require("./routes/viewCourses");
+const fs = require('fs');
+const viewResource=require('./routes/viewResource');
 
 
 // authorization\auth.js
@@ -469,7 +471,8 @@ app.post("/uploadResource", (req, res) => {
   year_offered=2022
   sem_offered="spring"
   instructorID= 0
-  uploadResource.uploadResource(resource_id, course_id, resource_type, year_offered, sem_offered, instructorID, file, res,title)
+
+  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title)
   /* For testing
   file.mv('./public/resources/'+file.name, async function(err) {
     if(err)
@@ -486,6 +489,16 @@ app.post("/uploadResource", (req, res) => {
     }
   }) 
   */
+});
+
+app.get('/pdf/:filepath',(req,res)=>{
+  console.log("path:",req.params.filepath)
+  var data = fs.readFileSync(`./public/resources/${req.params.filepath}`);
+  res.contentType('application/pdf');
+  res.send(data);
+});
+app.get('/viewResources',(req,res)=>{
+  viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
 });
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
