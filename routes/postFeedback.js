@@ -23,19 +23,22 @@ function seedData(query) {
     });
 }
 
-const postFeedback = async (username, courseID, year, sem, score, res)=> {
+const postFeedback = async (username, courseID, year, sem, assessmentID, score, res)=> {
     try {
-        if (!username || !courseID || !year || !sem || !studentID) {
+        console.log("hello i am here in postFeedback\n");
+        if (!username || !courseID || !year || !sem || !score) {
             return res.status(400).render("postFeedback", { message: "Please provide an ID and Passwords" });
         }
-        // SELECT * FROM Attempts WHERE username = ? AND courseID = ? AND year = ? AND sem = ? AND studentID = ?
-
-        lms_db.query("SELECT * FROM Attempts WHERE username = ? AND courseID = ? AND year = ? AND sem_offered = ? AND studentID = ?", [username, courseID, year, sem, studentID], async (err, results) => {
+        // select everything from Attempts table and console.log it
+        let query = `select * from Attempts`;
+        let x = await seedData(query);
+        console.log(x);
+        lms_db.query("SELECT * FROM Attempts WHERE student_id = ? AND course_id = ? AND year_offered = ? AND sem_offered = ? AND assessment_id ", [username, courseID, year, sem, assessmentID], async (err, results) => {
             if (results.length === 0) {
                 res.status(401).render("postFeedback", { message: "Something ain't right bro" });
             }
             else {
-                let score_query = `Update Attempts Set score="${score}" where username="${username} AND courseID= "${courseID}" AND year="${year}" AND sem_offered="${sem}" AND studentID="${studentID}"`;
+                let score_query = `Update Attempts Set score="${score}" where student_id = ${username} and course_id = ${courseID} and year_offered = ${year} and sem_offered = "${sem}" and assessment_id = ${assessmentID};`;
                 let x = await seedData(score_query);
                 console.log("Score Updated");
             }
