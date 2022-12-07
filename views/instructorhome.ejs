@@ -3,40 +3,6 @@
 <body class="mainpage">
     <link rel="stylesheet" href="/css/styles.css" type="text/css">
     <h1>Welcome to LMS (Instructor)</h1>
-
-    <!-- <form action="/instructorhome" method="POST">
-
-        <div>
-            <button type="submit" name="button" value="updatePassword">Update Password</button>  
-        </div>
-          
-       
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="CreateAnnouncement">Create Announcement</button>    
-        </div>
-
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="addAssignment">Add Assignment</button>
-        </div>
-
-        <br>
-        <div>
-            <button type="submit" name="button" value="postFeedback">Release Marks</button>
-        </div>
-
-        <br> 
-
-        <div>
-            <button type="submit" name="button" value="logout">Login Out</button>    
-        </div>
-
-        <br>
-    </form> -->
-    
     <section>
         <% Object.keys(courses).forEach(function(x){ %>
             <h1 style="text-align:center">
@@ -64,7 +30,7 @@
                                     </div>
                                     <br> 
                                     <div>
-                                        <button type="submit" name="button" value='{"tab": "addAssignment", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Uplaod Assignments</button>                                        
+                                        <button type="submit" name="button" value='{"tab": "addAssignment", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Upload Assignments</button>                                        
                                     </div>
                                     <br>
                                     <div>
