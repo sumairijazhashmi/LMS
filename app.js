@@ -316,28 +316,22 @@ app.post("/studenthome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/assignmentsTab");
     }
+    else if(obj.tab == "viewFeedback") {
+      res.redirect("/viewFeedback");
+    }
     else if(obj.tab == "viewResources") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewResources");
     }
     else if(obj.tab == "viewAnnouncements") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewAnnouncements");
     }
     else if(obj.tab == "viewRoster") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewRoster");
     }
   }
@@ -378,7 +372,7 @@ app.post("/postAssignment", (req, res)=> {
   made_by = req.body.made_by;
   // console.log("title should be here", title);
   // assessment id = prev id + 1
-  assessmentID = 49;
+  assessmentID = 50;
   postAssignment.postAssignment(assessmentID, title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res);
 })
 
@@ -444,10 +438,10 @@ app.post("/assignmentsTab", (req, res) => {
 });
 
 app.get("/viewFeedback", (req, res) => {
-  courseID = 420; // need to somehow store the course's specific ids here
-  sem = "spring";
-  year = 2022;
-  studentID= 6;
+  courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
+  sem = req.session.userinfo.sem;
+  year = req.session.userinfo.year;
+  studentID= req.session.userinfo.username;
   (async () => {
    let result = await feedback.feedback(courseID, year, sem, studentID);
    console.log("here", result)
