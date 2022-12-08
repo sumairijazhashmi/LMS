@@ -29,8 +29,6 @@ const viewResource=require('./routes/viewResource');
 const viewRoster=require('./routes/viewRoster');
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
-
-const viewRoster=require('./routes/viewRoster');
 // authorization\auth.js
 const app = express();
 
