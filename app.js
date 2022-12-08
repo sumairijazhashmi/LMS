@@ -493,7 +493,7 @@ app.post("/uploadResource", (req, res) => {
   sem_offered="spring"
   instructorID= 0
 
-  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title)
+  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title,s3)
   /* For testing
   file.mv('./public/resources/'+file.name, async function(err) {
     if(err)
