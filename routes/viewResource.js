@@ -25,36 +25,68 @@ function seedData(query)
       });
 }
 
+
+//fucntion that runs in GET viewResource. To display all available resources
 async function viewResource(courseID,year,semester,res){
+
   let selectDBSQL = `USE LMS;`;
   await seedData(selectDBSQL);
   let resource_query = `select * from Resources where course_id=${courseID} and year_offered=${year} and sem_offered="${semester}";`;
   let x= await seedData(resource_query);
-  console.log(x)
-  let f=null
-  try{
-    f=x[0].resource_path;
+  //console.log(x)
+  try{ //if result has some files
     console.log(x[0].resource_path)
-    let s=x[0].resource_path.split('.')
-    console.log('extension:',s[s.length-1])
     res.render("viewResources", {
       status:"display: block",
       noRecords:"display: none",
-      data:x,
-      extension:s[s.length-1]
+      data:x
   });
   }
-  catch
-  {
+  catch //if result is empty
+  { 
     console.log("no records")
     res.render("viewResources", {
       status:"display: none",
       noRecords:"display: block",
-      data:"",
-      extension:""
+      data:""
   });
   }
 }
+
+
+//Function to view/Download single resource file. Called in GET /file/:filepath.
+async function manageFile(filepath,res,s3)
+{
+  //parameters to pass in fucntion
+  const s3Params = {
+    Bucket: "cyclic-doubtful-fawn-robe-us-east-2", //aws bucket name - 'DON'T CHNAGE IT
+    Key: filepath + '' //FILE-Key
+  };
+
+  console.log("viewing");
+ 
+  //-----------------------------------------------------------------
+  //Gets signed URL of file in aws bucket
+  //It will open pdf file in new tab and download any other file type
+  //NOT NEED TO EDIT IT
+  //----------------------------------------------------------
+
+  s3.getSignedUrl('getObject', s3Params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+          signedRequest: data,
+      };
+      x=returnData["signedRequest"]
+      //console.log(x)
+      res.writeHead(302, {
+        'Location': x
+      });
+      res.end();
+    });
+}
 module.exports = {
-    viewResource
+    viewResource, manageFile
 };
