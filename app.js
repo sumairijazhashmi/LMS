@@ -27,7 +27,10 @@ const viewCourses = require("./routes/viewCourses");
 const fs = require('fs');
 const viewResource=require('./routes/viewResource');
 const viewRoster=require('./routes/viewRoster');
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
 
+const viewRoster=require('./routes/viewRoster');
 // authorization\auth.js
 const app = express();
 
@@ -510,12 +513,10 @@ app.post("/uploadResource", (req, res) => {
   }) 
   */
 });
+app.get('/file/:filepath',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  viewResource.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
 
-app.get('/pdf/:filepath',(req,res)=>{
-  console.log("path:",req.params.filepath)
-  var data = fs.readFileSync(`./public/resources/${req.params.filepath}`);
-  res.contentType('application/pdf');
-  res.send(data);
 });
 app.get('/viewResources',(req,res)=>{
   viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
