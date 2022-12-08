@@ -59,7 +59,7 @@ async function manageFile(filepath,res,s3)
 {
   //parameters to pass in fucntion
   const s3Params = {
-    Bucket: "cyclic-thoughtful-frock-moth-eu-west-3", //aws bucket name - 'DON'T CHNAGE IT
+    Bucket: "cyclic-doubtful-fawn-robe-us-east-2", //aws bucket name - 'DON'T CHNAGE IT
     Key: filepath + '' //FILE-Key
   };
 
