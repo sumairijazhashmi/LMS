@@ -28,24 +28,48 @@ function seedData(query)
       });
 }
 
-const uploadResource = async (course_id, resource_type,year_offered, sem_offered, made_by, file, res,title) => {
+const uploadResource = async (course_id, resource_type,year_offered, sem_offered, made_by, file, res,title,s3) => {
     try {
-        let resource_path='./public/resources/' + course_id+'-'+resource_type+'-'+title+'-'+file.name
-        
-      file.mv(resource_path, async function(err) {
-        //----UNCOMMENT THIS when we have course,instructor IDs------//
 
-        var stats = fs.statSync(resource_path)
-        var filesize_mb = stats.size / (1024*1024)
-                    
-        let query = `insert into Resources (course_id, resource_type, title, resource_path ,year_offered , sem_offered, made_by, file_size) values ( ${course_id}, "${resource_type}", "${title}","${resource_path}", ${year_offered}, "${sem_offered}", ${made_by}, ${filesize_mb});`; 
-            await seedData(query);
-            console.log("uploaded---")
-            res.render("uploadResource", 
+        //try to make a unique FILE KEY. it will act as identifer to file in aws bucket.
+        let resource_key=course_id+'-'+resource_type+'-'+title+'-'+file.name
+
+        //console.log("file: ",file)
+
+        //PARAMS to pass. No need to change if you have "file" in arguments.
+        var params = {
+            Key : resource_key,
+            Body : file.data,
+            Bucket: "cyclic-doubtful-fawn-robe-us-east-2",
+            ContentType : file.mimetype //filetype pdf/docx/xls etc
+        }
+    
+
+        //-------------
+        //Uploads file in aws bucket.
+        //NO NEED TO CHANGE
+        var options = {partSize: 10 * 1024 * 1024, queueSize: 1};
+        await s3.upload(params, options, async(err, data) => {
+            if(err)
             {
-                message: "Resource Uploaded"
-            });
-        })       
+                console.log(err)
+            }
+            else
+            {
+            var filesize_mb = file.size / (1024*1024) //find file size
+                   
+            //ALSO Save FILE KEY (resource_key in my case) in Database, so you can fetch it later.
+            let query = `insert into Resources (course_id, resource_type, title, resource_path ,year_offered , sem_offered, made_by, file_size) values ( ${course_id}, "${resource_type}", "${title}","${resource_key}", ${year_offered}, "${sem_offered}", ${made_by}, ${filesize_mb});`; 
+                await seedData(query);
+                console.log("uploaded---")
+                res.render("uploadResource", 
+                {
+                    message: "Resource Uploaded"
+                });
+            }
+        });
+        
+           
     }
     catch (error) {
         console.log(error)
