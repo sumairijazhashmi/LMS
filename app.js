@@ -26,6 +26,8 @@ const submitAssignment = require("./routes/submitAssignment");
 const viewCourses = require("./routes/viewCourses");
 const fs = require('fs');
 const viewResource=require('./routes/viewResource');
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
 
 
 // authorization\auth.js
@@ -460,11 +462,10 @@ app.get("/uploadResource", (req, res) => {
     message:''
   })
 });
-app.post("/uploadResource", (req, res) => {
+app.post("/uploadResource", async (req, res) => {
+  
   file = req.files.resFile
   title = req.body.resTitle
-
-  //replace these dummy values with session values
   resource_id = 0
   course_id=0
   resource_type="lectures"
@@ -472,7 +473,7 @@ app.post("/uploadResource", (req, res) => {
   sem_offered="spring"
   instructorID= 0
 
-  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title)
+  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title,s3)
   /* For testing
   file.mv('./public/resources/'+file.name, async function(err) {
     if(err)
@@ -489,13 +490,13 @@ app.post("/uploadResource", (req, res) => {
     }
   }) 
   */
+
 });
 
-app.get('/pdf/:filepath',(req,res)=>{
-  console.log("path:",req.params.filepath)
-  var data = fs.readFileSync(`./public/resources/${req.params.filepath}`);
-  res.contentType('application/pdf');
-  res.send(data);
+app.get('/file/:filepath',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  viewResource.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
+
 });
 app.get('/viewResources',(req,res)=>{
   viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
