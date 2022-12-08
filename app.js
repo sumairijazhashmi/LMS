@@ -26,7 +26,7 @@ const submitAssignment = require("./routes/submitAssignment");
 const viewCourses = require("./routes/viewCourses");
 const fs = require('fs');
 const viewResource=require('./routes/viewResource');
-
+const viewRoster=require('./routes/viewRoster');
 
 // authorization\auth.js
 const app = express();
@@ -334,6 +334,7 @@ app.post("/studenthome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
+    console.log(req.session.userinfo);
     req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
     req.session.userinfo.year = obj.year;
@@ -519,6 +520,11 @@ app.get('/pdf/:filepath',(req,res)=>{
 app.get('/viewResources',(req,res)=>{
   viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
 });
+
+app.get('/viewRoster',(req,res)=>{
+  viewRoster.viewRoster(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
+});
+
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
 });

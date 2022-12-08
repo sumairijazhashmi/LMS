@@ -77,25 +77,6 @@ const viewCourses = async (user_id, role, res) => {
             console.log(courses)
             // send an ok response
             res.render("studenthome", {message: "Courses obtained", courses: courses});
-            // now render the viewCourses page with the courses dictionary
-            // res.render("viewCourses", {courses: courses, role: role, user_id: user_id});
-
-            // let fall_courses = []
-            // let spring_courses = []
-            // for (let i = 0; i < x.length; i++)
-            // {
-            //     if (x[i].sem_offered == "fall")
-            //     {
-            //         fall_courses.push(x[i])
-            //     }
-            //     else
-            //     {
-            //         spring_courses.push(x[i])
-            //     }
-            // }
-
-            // console.log(x)
-            // res.render("viewCourses", {message: "Courses", courses: x});
         }
         else if (role == "instructor")
         {
