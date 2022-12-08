@@ -27,7 +27,13 @@ function seedData(query)
       });
 }
 
-const feedback = async (courseID, year, sem, studentID) => {
+const feedback = async (courseID, year, sem, studentID, res) => {
+    // insert into Attempts table
+    // insert into assisgnment table
+    // let query0 = `insert into Assignments (student_ID, course_ID, year_offered, sem_offered, assessment_id) values (${studentID}, ${courseID}, ${year}, "${sem}", 50);`;
+    // let query1 = `insert into Attempts (student_ID, course_ID, year_offered, sem_offered, assessment_id) values (${studentID}, ${courseID}, ${year}, "${sem}" , 50);`;
+    // await seedData(query1);
+
     let query = `select assessment_ID, score from Attempts where student_ID = ${studentID} and course_ID = ${courseID} and year_offered = ${year} and sem_offered = "${sem}";`;
     let x = await seedData(query);
     return x;

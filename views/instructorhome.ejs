@@ -1,41 +1,68 @@
 <%-include("partials/header");-%>
+<%-include("partials/navbar");-%>
 <body class="mainpage">
     <link rel="stylesheet" href="/css/styles.css" type="text/css">
     <h1>Welcome to LMS (Instructor)</h1>
+    <section>
+        <% Object.keys(courses).forEach(function(x){ %>
+            <h1 style="text-align:center">
+                Year <%=x%>
+            </h1>
+            <% Object.keys(courses[x]).forEach(function(y){ %>
+                <section>
+                    <h2 class="section-title"><%=y%></h2>
+                    
+                </section>
+                <!-- do another object.keys to access each semester of each year-->
+                <% Object.keys(courses[x][y]).forEach(function(z){ %>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card-header">
+                                <h3>Course: <%=courses[x][y][z].name%></h3>
+                              </div>
+                              <div class="card-body">
+                                <h4>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h4>
+                                <form action="/instructorhome" method="POST">
+                                    <div>
+                        
+                                        <button type="submit" name="button" value='{"tab": "CreateAnnouncement", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Create Announcements</button>
+    
+                                    </div>
+                                    <br> 
+                                    <div>
+                                        <button type="submit" name="button" value='{"tab": "addAssignment", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Upload Assignments</button>                                        
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <button type="submit" name="button" value='{"tab": "postFeedback", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Release Feedback</button>                                        
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <button type="submit" name="button" value='{"tab": "uploadResources", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Upload Resources</button>                                        
+                                    </div>
+                                    <br>  
+                                    <div>
+                                        <button type="submit" name="button" value='{"tab": "viewRoster", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Roster</button>                                        
+                                    </div>
+                                    <br>
+                
+                                    
+                                </form>
+                                <!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+                              </div>
+        
+                        </div>
+                    </div>
+                <% }); %>
 
-    <form action="/instructorhome" method="POST">
-
-        <div>
-            <button type="submit" name="button" value="updatePassword">Update Password</button>  
-        </div>
-          
-       
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="CreateAnnouncement">Create Announcement</button>    
-        </div>
-
-        <br> <br>
-
-        <div>
-            <button type="submit" name="button" value="addAssignment">Add Assignment</button>
-        </div>
-
-        <br>
-        <div>
-            <button type="submit" name="button" value="postFeedback">Release Marks</button>
-        </div>
-
-        <br> 
-
-        <div>
-            <button type="submit" name="button" value="logout">Login Out</button>    
-        </div>
-
-        <br>
-    </form>
-    <h3><%=message%></h3>
+                <h1 style="text-align:center">
+                    <!-- <%=JSON.stringify(courses[x][y])%> -->
+                </h1>
+                </section>
+                <br>
+                <% }); %>
+        <% }); %>
+    </section>
     <!-- <<script src="/js/index.js"></script> -->
 </body>
 </html>

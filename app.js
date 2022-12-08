@@ -29,6 +29,7 @@ const viewResource=require('./routes/viewResource');
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 
+const viewRoster=require('./routes/viewRoster');
 
 // authorization\auth.js
 const app = express();
@@ -76,6 +77,7 @@ app.use(
 
 
 app.get("/main",(req,res)=>{
+
   res.render("main", {message: ""}); // file name original 
 });
 
@@ -146,7 +148,7 @@ app.get("/updateProfile",(req,res)=>{
 app.get("/instructorhome",(req,res)=>{
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'instructor'){
-    res.render("instructorhome", {message: ""}); // file name original 
+    viewCourses.viewCourses(req.session.userinfo.username, req.session.userinfo.role, res);
   } else {
     res.redirect("/main");
   }
@@ -284,7 +286,6 @@ app.post("/removeExistingCourse",(req,res)=>{
 
 app.post("/instructorhome",(req,res)=>{
 
-  console.log(req.body.button);
   if(req.body.button == 'updatePassword')
   {
     res.redirect("/updatePassword");
@@ -293,11 +294,29 @@ app.post("/instructorhome",(req,res)=>{
   {
     res.render("main", {message: "Logged Out!"});
   }
-  else if(req.body.button == "addAssignment") {
-    res.redirect("/postAssignment");
-  }
-  else if(req.body.button == "postFeedback") {
-    res.redirect("/postFeedback");
+  else{
+    var obj = JSON.parse(req.body.button);
+    console.log("tab:", obj);
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
+    if(obj.tab == 'CreateAnnouncement')
+    {
+      res.redirect("/CreateAnnouncement");
+    }
+    else if(obj.tab== "addAssignment") {
+      res.redirect("/postAssignment");
+    }
+    else if(obj.tab == "postFeedback") {
+      
+      res.redirect("/postFeedback");
+    }
+    else if(obj.tab== "uploadResources") {
+      res.redirect("/uploadResources");
+    }
+    else if(obj.tab == "viewRoster") {
+      res.redirect("/viewRoster");
+    }
   }
   
 });
@@ -318,46 +337,48 @@ app.post("/studenthome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
+    console.log(req.session.userinfo);
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/assignmentsTab");
     }
+    else if(obj.tab == "viewFeedback") {
+      res.redirect("/viewFeedback");
+    }
     else if(obj.tab == "viewResources") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewResources");
     }
     else if(obj.tab == "viewAnnouncements") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewAnnouncements");
     }
     else if(obj.tab == "viewRoster") {
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.year;
       res.redirect("/viewRoster");
     }
   }
 });
 
 app.get("/postFeedback", (req, res)=> {
+  console.log("HI I AM HERE")
   res.render("postFeedback", {message: ""});
 })
 app.post("/postFeedback",(req,res)=>{
-
+  console.log(req.session.userinfo)
   userID = req.body.userID
-  courseID = req.body.courseID
-  year = req.body.year
-  sem = req.body.sem
+  courseID = req.session.userinfo.courseID
+  year = req.session.userinfo.year
+  sem = req.session.userinfo.sem
   score = req.body.score
+  assessmentID = req.body.assessmentID
+  console.log("userID: ", userID)
+  console.log("courseID: ", courseID)
+  console.log("year: ", year)
+  console.log("sem: ", sem)
+  console.log("score: ", score)
+  console.log("assessmentID: ", assessmentID)
 
-
-  postFeedback.postFeedback(userID, courseID, year, sem, score, res)
+  postFeedback.postFeedback(userID, courseID, year, sem, assessmentID, score, res)
   
 });
 
@@ -380,7 +401,7 @@ app.post("/postAssignment", (req, res)=> {
   made_by = req.body.made_by;
   // console.log("title should be here", title);
   // assessment id = prev id + 1
-  assessmentID = 49;
+  assessmentID = 50;
   postAssignment.postAssignment(assessmentID, title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res);
 })
 
@@ -446,10 +467,10 @@ app.post("/assignmentsTab", (req, res) => {
 });
 
 app.get("/viewFeedback", (req, res) => {
-  courseID = 420; // need to somehow store the course's specific ids here
-  sem = "spring";
-  year = 2022;
-  studentID= 6;
+  courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
+  sem = req.session.userinfo.sem;
+  year = req.session.userinfo.year;
+  studentID= req.session.userinfo.username;
   (async () => {
    let result = await feedback.feedback(courseID, year, sem, studentID);
    console.log("here", result)
@@ -501,6 +522,11 @@ app.get('/file/:filepath',async (req,res)=>{
 app.get('/viewResources',(req,res)=>{
   viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
 });
+
+app.get('/viewRoster',(req,res)=>{
+  viewRoster.viewRoster(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
+});
+
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
 });

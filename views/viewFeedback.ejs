@@ -3,30 +3,40 @@
     <body class="assignmentsTab"
         style="font-size: 2em; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <h1 style="left:20px;">Assignments</h1>
-        <form id="assignmentsTab" action="/assignmentsTab" method="POST">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Assignment Title</th>
-                        <th scope="col">Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(var i=0; i<assignments.length; i++){ %>
-                        <tr>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Assignment Title</th>
+                    <th scope="col">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Object.keys(assignments).forEach(function(x){ %>
+                <tr>
+                    <td>
+                        <%=assignments[x].assessment_ID%>
+                    </td>
+                    <td>
+                        <%=assignments[x].score%>
+                    </td>
+                </tr>
+                <% }); %>
 
-                            <td>
-                                <%=assignments[i].topic%>
-                            </td>
-                            <td>
-                                <%=assignments[i].score%>
-                            </td>
-                        </tr>
-                        <% } %>
-                </tbody>
-            </table>
-        </form>
+                <!-- <% for(var i=0; i<assignments.length; i++){ %>
+                    <tr>
+
+                        <td>
+                            <%=assignments[i].topic%>
+                        </td>
+                        <td>
+                            <%=assignments[i].score%>
+                        </td>
+                    </tr>
+                    <% } %> -->
+            </tbody>
+        </table>
+
 
     </body>
 
-</html>
+    </html>

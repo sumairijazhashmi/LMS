@@ -4,34 +4,6 @@
     <body class="mainpage">
         <link rel="stylesheet" href="/css/styles.css" type="text/css">
         <h1>Welcome to LMS (Student)</h1>
-
-        <!-- <form action="/studenthome" method="POST"> -->
-            <!-- <div>
-                <button type="submit" name="button" value="viewAssignments">View Assignments</button>
-            </div>
-            <br> <br>
-            <div>
-                <button type="submit" name="button" value="viewFeedback">View Feedback</button>
-            </div>
-            <br> <br>
-            <div>
-                <button type="submit" name="button" value="updatePassword">Update Password</button>
-            </div>
-            <br> <br>
-            <div>
-                <button type="submit" name="button" value="logout">Login Out</button>
-            </div>
-            <br>
-        </form> -->
-        <!-- <% Object.keys(courses).forEach(function(x){ %>
-            do another object.keys to access each attribute of each course
-            <% Object.keys(courses[x]).forEach(function(y){ %>
-                <h3>
-                    <%=JSON.stringify(courses[x][y].name)%>
-                </h3>
-                <% }); %>
-        <% }); %> -->
-
         <section>
             <% Object.keys(courses).forEach(function(x){ %>
                 <h1 style="text-align:center">
@@ -60,6 +32,10 @@
                                         <br> 
                                         <div>
                                             <button type="submit" name="button" value='{"tab": "viewAssignments", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Assignments</button>                                        
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <button type="submit" name="button" value='{"tab": "viewFeedback", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Feedback</button>                                        
                                         </div>
                                         <br>
                                         <div>
