@@ -340,9 +340,9 @@ app.post("/studenthome",(req,res)=>{
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
     console.log(req.session.userinfo);
-    req.session.userinfo.courseID = obj.course_id;
-    req.session.userinfo.sem = obj.sem;
-    req.session.userinfo.year = obj.year;
+    res.cookie('courseID', obj.course_id,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
+    res.cookie('sem', obj.sem,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
+    res.cookie('year', obj.year,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
