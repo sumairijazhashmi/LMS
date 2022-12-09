@@ -26,6 +26,7 @@ const submitAssignment = require("./routes/submitAssignment");
 const viewCourses = require("./routes/viewCourses");
 const fs = require('fs');
 const viewResource=require('./routes/viewResource');
+const viewAnnouncements =require('./routes/viewAnnouncements');
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 
@@ -409,6 +410,9 @@ app.get("/CreateAnnouncement", (req, res)=> {
   res.render("CreateAnnouncement", {message: ""});
 })
 
+
+
+
 app.post("/CreateAnnouncement", (req, res)=> {
 
   
@@ -424,6 +428,22 @@ app.post("/CreateAnnouncement", (req, res)=> {
   // assessmentID = 49;
   CreateAnnouncement.CreateAnnouncement(title, text, course_name, course_code,year, sem, made_by, res);
 })
+
+// app.get("/viewAnnouncements", (req, res)=> {
+//   res.render("viewAnnouncements", {message: ""});
+// })
+
+app.get("/viewAnnouncements", (req, res) => {
+  courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
+  sem = req.session.userinfo.sem;
+  year = req.session.userinfo.year;
+  studentID= req.session.userinfo.username;
+  (async () => {
+   let result = await viewAnnouncements.viewAnnouncements(courseID, year, sem,res);
+   console.log("here", result)
+   res.render("viewAnnouncements", {announcements: result});
+ })();
+});
 
 
 app.post("/register",async (req,res)=>{
