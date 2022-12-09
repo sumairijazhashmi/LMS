@@ -347,10 +347,6 @@ app.post("/studenthome", async (req,res)=>{
     req.session.userinfo.sem = y;
     req.session.userinfo.year = z;
     await req.session.save(()=>{
-    req.session.userinfo.courseID = x;
-    req.session.userinfo.sem = y;
-    req.session.userinfo.year = z;
-    });
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
@@ -366,6 +362,7 @@ app.post("/studenthome", async (req,res)=>{
     else if(obj.tab == "viewRoster") {
       res.redirect("/viewRoster");
     }
+    });
   }
 });
 
