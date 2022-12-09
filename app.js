@@ -346,11 +346,11 @@ app.post("/studenthome", async (req,res)=>{
     req.session.userinfo.courseID = x;
     req.session.userinfo.sem = y;
     req.session.userinfo.year = z;
-    await req.session.save(
+    await req.session.save(()=>{
     req.session.userinfo.courseID = x;
     req.session.userinfo.sem = y;
     req.session.userinfo.year = z;
-    );
+    });
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
