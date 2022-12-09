@@ -336,13 +336,12 @@ app.post("/studenthome", async (req,res)=>{
   else{
     console.log(req.body.button);
     var obj = JSON.parse(req.body.button);
-    console.log(obj.tab);
-    console.log(obj.course_id);
-    console.log(obj.sem);
-    console.log(obj.year);
-    req.session.userinfo.courseID = obj.course_id;
-    req.session.userinfo.sem = obj.sem;
-    req.session.userinfo.year = obj.year;
+    x=obj.course_id;
+    y=obj.sem;
+    z=obj.year;
+    req.session.userinfo.courseID = x;
+    req.session.userinfo.sem = y;
+    req.session.userinfo.year = z;
     await req.session.save();
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
