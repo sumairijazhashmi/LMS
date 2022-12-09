@@ -33,8 +33,7 @@ const feedback = async (courseID, year, sem, studentID, res) => {
     // let query0 = `insert into Assignments (student_ID, course_ID, year_offered, sem_offered, assessment_id) values (${studentID}, ${courseID}, ${year}, "${sem}", 50);`;
     // let query1 = `insert into Attempts (student_ID, course_ID, year_offered, sem_offered, assessment_id) values (${studentID}, ${courseID}, ${year}, "${sem}" , 50);`;
     // await seedData(query1);
-
-    let query = `select assessment_ID, score from Attempts where student_ID = ${studentID} and course_ID = ${courseID} and year_offered = ${year} and sem_offered = "${sem}";`;
+    let query = `select ass_data, score from Attempts where ass_data like '${courseID}-${year}-${sem}-%' and student_ID = ${studentID};`;
     let x = await seedData(query);
     return x;
 }

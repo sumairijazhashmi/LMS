@@ -370,15 +370,15 @@ app.post("/postFeedback",(req,res)=>{
   year = req.session.userinfo.year
   sem = req.session.userinfo.sem
   score = req.body.score
-  assessmentID = req.body.assessmentID
+  due_date = req.body.due_date
   console.log("userID: ", userID)
   console.log("courseID: ", courseID)
   console.log("year: ", year)
   console.log("sem: ", sem)
   console.log("score: ", score)
-  console.log("assessmentID: ", assessmentID)
+  console.log("due_date: ", due_date)
 
-  postFeedback.postFeedback(userID, courseID, year, sem, assessmentID, score, res)
+  postFeedback.postFeedback(userID, courseID, year, sem, due_date, score, res)
   
 });
 
