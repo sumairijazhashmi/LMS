@@ -27,6 +27,7 @@ const viewCourses = require("./routes/viewCourses");
 const fs = require('fs');
 const viewResource=require('./routes/viewResource');
 const viewRoster=require('./routes/viewRoster');
+const viewAnnouncements =require('./routes/viewAnnouncements');
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 // authorization\auth.js
