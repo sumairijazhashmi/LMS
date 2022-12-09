@@ -339,7 +339,7 @@ app.post("/studenthome",(req,res)=>{
     console.log(obj.course_id);
     console.log(obj.sem);
     console.log(obj.year);
-    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.courseID = 100;
     req.session.userinfo.sem = obj.sem;
     req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
