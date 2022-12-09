@@ -339,12 +339,9 @@ app.post("/studenthome",(req,res)=>{
     console.log(obj.course_id);
     console.log(obj.sem);
     console.log(obj.year);
-    console.log(req.body.button["course_id"]);
-    console.log(req.body.button["sem"]);
-    console.log(req.body.button["year"]);
-    req.session.userinfo.courseID = req.body.button["course_id"];
-    req.session.userinfo.sem = req.body.button["sem"];
-    req.session.userinfo.year = req.body.button["year"];
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
