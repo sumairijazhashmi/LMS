@@ -205,7 +205,7 @@ app.get("/register",(req,res)=>{
 
 app.get("/logout",(req,res)=>{
   req.session.destroy();
-  res.redirect("main", {message: "Logged Out!"});
+  res.render("main", {message: "Logged Out!"});
 })
 
 app.post("/delete",async (req,res)=>{
@@ -282,7 +282,7 @@ app.post("/removeExistingCourse",(req,res)=>{
   
 });
 
-app.post("/instructorhome", async (req,res)=>{
+app.post("/instructorhome",(req,res)=>{
 
   if(req.body.button == 'updatePassword')
   {
@@ -297,12 +297,7 @@ app.post("/instructorhome", async (req,res)=>{
     console.log("tab:", obj);
     req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
-    req.session.userinfo.year = obj.button;
-    await req.session.save(()=>{
-      req.session.userinfo.courseID = obj.course_id;
-      req.session.userinfo.sem = obj.sem;
-      req.session.userinfo.year = obj.button;
-    });
+    req.session.userinfo.year = obj.year;
     if(obj.tab == 'CreateAnnouncement')
     {
       res.redirect("/CreateAnnouncement");
@@ -324,7 +319,8 @@ app.post("/instructorhome", async (req,res)=>{
   
 });
 
-app.post("/studenthome", async (req,res)=>{
+
+/*app.post("/studenthome",(req,res)=>{
 
   console.log(req.body.button);
   // req.body.button is a json object with two values tab and course_id
@@ -338,19 +334,12 @@ app.post("/studenthome", async (req,res)=>{
     res.render("main", {message: "Logged Out!"});
   }
   else{
-    console.log(req.body.button);
     var obj = JSON.parse(req.body.button);
-    x=obj.course_id;
-    y=obj.sem;
-    z=obj.year;
     console.log(obj.tab);
-    console.log(x);
-    console.log(y);
-    console.log(z);
-    req.session.userinfo.courseID = x;
-    req.session.userinfo.sem = y;
-    req.session.userinfo.year = z;
-    await req.session.save(()=>{
+    console.log(req.session.userinfo);
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
@@ -366,10 +355,9 @@ app.post("/studenthome", async (req,res)=>{
     else if(obj.tab == "viewRoster") {
       res.redirect("/viewRoster");
     }
-    });
   }
 });
-
+*/
 app.get("/postFeedback", (req, res)=> {
   console.log("HI I AM HERE")
   res.render("postFeedback", {message: ""});
@@ -420,6 +408,9 @@ app.get("/CreateAnnouncement", (req, res)=> {
   res.render("CreateAnnouncement", {message: ""});
 })
 
+
+
+
 app.post("/CreateAnnouncement", (req, res)=> {
 
   
@@ -435,6 +426,22 @@ app.post("/CreateAnnouncement", (req, res)=> {
   // assessmentID = 49;
   CreateAnnouncement.CreateAnnouncement(title, text, course_name, course_code,year, sem, made_by, res);
 })
+
+// app.get("/viewAnnouncements", (req, res)=> {
+//   res.render("viewAnnouncements", {message: ""});
+// })
+
+app.get("/viewAnnouncements/:courseid/:year/:sem", (req, res) => {
+  //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
+  //sem = req.session.userinfo.sem;
+  //year = req.session.userinfo.year;
+  //studentID= req.session.userinfo.username;
+  (async () => {
+   let result = await viewAnnouncements.viewAnnouncements(req.params.courseid, req.params.year, req.params.sem,res);
+   console.log("here", result)
+   res.render("viewAnnouncements", {announcements: result});
+ })();
+});
 
 
 app.post("/register",async (req,res)=>{
@@ -452,12 +459,12 @@ app.post("/register",async (req,res)=>{
 
 
 
-app.get("/assignmentsTab", (req, res) => {
+app.get("/assignmentsTab/:courseid/:year/:sem", (req, res) => {
    courseID = 420; // need to somehow store the course's specific ids here
    sem = "spring";
    year = 2022;
    (async () => {
-    let result = await assignmentsTab.assignmentsTab(courseID, year, sem);
+    let result = await assignmentsTab.assignmentsTab(req.params.courseid, req.params.year, req.params.sem);
     console.log("here", result)
     res.render("assignmentsTab", {assignments: result});
   })();
@@ -477,13 +484,13 @@ app.post("/assignmentsTab", (req, res) => {
   }
 });
 
-app.get("/viewFeedback", (req, res) => {
-  courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
-  sem = req.session.userinfo.sem;
-  year = req.session.userinfo.year;
+app.get("/viewFeedback/:courseid/:year/:sem", (req, res) => {
+  //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
+  //sem = req.session.userinfo.sem;
+  //year = req.session.userinfo.year;
   studentID= req.session.userinfo.username;
   (async () => {
-   let result = await feedback.feedback(courseID, year, sem, studentID);
+   let result = await feedback.feedback(req.params.courseid, req.params.year, req.params.sem, studentID);
    console.log("here", result)
    res.render("viewFeedback", {assignments: result});
  })();
@@ -494,11 +501,10 @@ app.get("/uploadResource", (req, res) => {
     message:''
   })
 });
-app.post("/uploadResource", (req, res) => {
+app.post("/uploadResource", async (req, res) => {
+  
   file = req.files.resFile
   title = req.body.resTitle
-
-  //replace these dummy values with session values
   resource_id = 0
   course_id=0
   resource_type="lectures"
@@ -506,7 +512,7 @@ app.post("/uploadResource", (req, res) => {
   sem_offered="spring"
   instructorID= 0
 
-  uploadResource.uploadResource(req.session.userinfo.courseID, "lecture", req.session.userinfo.year, req.session.userinfo.sem, req.session.userinfo.username, file, res,title,s3)
+  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title,s3)
   /* For testing
   file.mv('./public/resources/'+file.name, async function(err) {
     if(err)
@@ -523,18 +529,21 @@ app.post("/uploadResource", (req, res) => {
     }
   }) 
   */
+
 });
+
 app.get('/file/:filepath',async (req,res)=>{
   //console.log("path:",req.params.filepath)
   viewResource.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
 
 });
-app.get('/viewResources',(req,res)=>{
-  viewResource.viewResource(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
+
+app.get('/viewResources/:courseid/:year/:sem',(req,res)=>{
+  viewResource.viewResource(req.params.courseid,req.params.year,req.params.sem,res);
 });
 
-app.get('/viewRoster',(req,res)=>{
-  viewRoster.viewRoster(req.session.userinfo.courseID,req.session.userinfo.year,req.session.userinfo.sem,res);
+app.get('/viewRoster/:courseid/:year/:sem',(req,res)=>{
+  viewRoster.viewRoster(req.params.courseid,req.params.year,req.params.sem,res);
 });
 
 app.listen(5000,()=>{
