@@ -336,7 +336,12 @@ app.post("/studenthome",(req,res)=>{
     console.log(req.body.button);
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
-    console.log(req.session.userinfo);
+    console.log(obj.course_id);
+    console.log(obj.sem);
+    console.log(obj.year);
+    console.log(req.body.button["course_id"]);
+    console.log(req.body.button["sem"]);
+    console.log(req.body.button["year"]);
     req.session.userinfo.courseID = req.body.button["course_id"];
     req.session.userinfo.sem = req.body.button["sem"];
     req.session.userinfo.year = req.body.button["year"];
