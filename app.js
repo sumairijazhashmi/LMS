@@ -295,9 +295,10 @@ app.post("/instructorhome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log("tab:", obj);
-    req.session.userinfo.courseID = req.body.button["course_id"];
-    req.session.userinfo.sem = req.body.button["sem"];
-    req.session.userinfo.year = req.body.button["year"];
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.button;
+    req.session.save();
     if(obj.tab == 'CreateAnnouncement')
     {
       res.redirect("/CreateAnnouncement");
@@ -339,9 +340,10 @@ app.post("/studenthome",(req,res)=>{
     console.log(obj.course_id);
     console.log(obj.sem);
     console.log(obj.year);
-    req.session.userinfo.courseID = 100;
+    req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
     req.session.userinfo.year = obj.year;
+    req.session.save();
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
