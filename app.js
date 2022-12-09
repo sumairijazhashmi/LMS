@@ -282,7 +282,7 @@ app.post("/removeExistingCourse",(req,res)=>{
   
 });
 
-app.post("/instructorhome",(req,res)=>{
+app.post("/instructorhome", async (req,res)=>{
 
   if(req.body.button == 'updatePassword')
   {
@@ -298,7 +298,7 @@ app.post("/instructorhome",(req,res)=>{
     req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
     req.session.userinfo.year = obj.button;
-    req.session.save();
+    await req.session.save();
     if(obj.tab == 'CreateAnnouncement')
     {
       res.redirect("/CreateAnnouncement");
@@ -320,7 +320,7 @@ app.post("/instructorhome",(req,res)=>{
   
 });
 
-app.post("/studenthome",(req,res)=>{
+app.post("/studenthome", async (req,res)=>{
 
   console.log(req.body.button);
   // req.body.button is a json object with two values tab and course_id
@@ -343,7 +343,7 @@ app.post("/studenthome",(req,res)=>{
     req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
     req.session.userinfo.year = obj.year;
-    req.session.save();
+    await req.session.save();
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
