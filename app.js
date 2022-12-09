@@ -74,7 +74,6 @@ app.use(
 
 
 
-
 app.get("/main",(req,res)=>{
 
   res.render("main", {message: ""}); // file name original 
@@ -296,9 +295,12 @@ app.post("/instructorhome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log("tab:", obj);
-    req.session.userinfo.courseID = obj.course_id;
-    req.session.userinfo.sem = obj.sem;
-    req.session.userinfo.year = obj.year;
+    res.cookie('courseID', obj.course_id,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
+    res.cookie('sem', obj.sem,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
+    res.cookie('year', obj.year,{  maxAge: 900000,httpOnly: true,secure: false, overwrite: true })
+    //req.session.userinfo.courseID = obj.course_id;
+    //req.session.userinfo.sem = obj.sem;
+    //req.session.userinfo.year = obj.year;
     if(obj.tab == 'CreateAnnouncement')
     {
       res.redirect("/CreateAnnouncement");
@@ -311,7 +313,7 @@ app.post("/instructorhome",(req,res)=>{
       res.redirect("/postFeedback");
     }
     else if(obj.tab== "uploadResources") {
-      res.redirect("/uploadResources");
+      res.redirect("/uploadResource");
     }
     else if(obj.tab == "viewRoster") {
       res.redirect("/viewRoster");
@@ -321,7 +323,7 @@ app.post("/instructorhome",(req,res)=>{
 });
 
 
-/*app.post("/studenthome",(req,res)=>{
+app.post("/studenthome",(req,res)=>{
 
   console.log(req.body.button);
   // req.body.button is a json object with two values tab and course_id
@@ -358,7 +360,7 @@ app.post("/instructorhome",(req,res)=>{
     }
   }
 });
-*/
+
 app.get("/postFeedback", (req, res)=> {
   console.log("HI I AM HERE")
   res.render("postFeedback", {message: ""});
@@ -378,7 +380,7 @@ app.post("/postFeedback",(req,res)=>{
   console.log("score: ", score)
   console.log("due_date: ", due_date)
 
-  postFeedback.postFeedback(userID, courseID, year, sem, due_date, score, res)
+  postFeedback.postFeedback(userID, req.cookies.courseID, req.cookies.year, req.cookies.sem, due_date, score, res)
   
 });
 
@@ -403,7 +405,7 @@ app.post("/postAssignment", (req, res)=> {
   // console.log("title should be here", title);
   // assessment id = prev id + 1
   // assessmentID = req.body.assessmentID;
-  postAssignment.postAssignment(title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res, s3);
+  postAssignment.postAssignment(title, text, file, file_name, marks, due_date, release_date, course_name, req.cookies.courseID, req.cookies.year, req.cookies.sem, req.cookies.username, res, s3);
 })
 
 app.get("/CreateAnnouncement", (req, res)=> {
@@ -426,20 +428,20 @@ app.post("/CreateAnnouncement", (req, res)=> {
   // console.log("title should be here", title);
   // assessment id = prev id + 1
   // assessmentID = 49;
-  CreateAnnouncement.CreateAnnouncement(title, text, course_name, course_code,year, sem, made_by, res);
+  CreateAnnouncement.CreateAnnouncement(title, text, course_name, req.cookies.courseID,req.cookies.year, req.cookies.sem, made_by, res);
 })
 
 // app.get("/viewAnnouncements", (req, res)=> {
 //   res.render("viewAnnouncements", {message: ""});
 // })
 
-app.get("/viewAnnouncements/:courseid/:year/:sem", (req, res) => {
+app.get("/viewAnnouncements", (req, res) => {
   //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
   //sem = req.session.userinfo.sem;
   //year = req.session.userinfo.year;
   //studentID= req.session.userinfo.username;
   (async () => {
-   let result = await viewAnnouncements.viewAnnouncements(req.params.courseid, req.params.year, req.params.sem,res);
+   let result = await viewAnnouncements.viewAnnouncements(req.cookies.courseID, req.cookies.year, req.cookies.sem,res);
    console.log("here", result)
    res.render("viewAnnouncements", {announcements: result});
  })();
@@ -461,12 +463,12 @@ app.post("/register",async (req,res)=>{
 
 
 
-app.get("/assignmentsTab/:courseid/:year/:sem", (req, res) => {
+app.get("/assignmentsTab", (req, res) => {
    courseID = 420; // need to somehow store the course's specific ids here
    sem = "spring";
    year = 2022;
    (async () => {
-    let result = await assignmentsTab.assignmentsTab(req.params.courseid, req.params.year, req.params.sem);
+    let result = await assignmentsTab.assignmentsTab(req.cookies.courseID, req.cookies.year, req.cookies.sem);
     console.log("here", result)
     res.render("assignmentsTab", {assignments: result});
   })();
@@ -482,17 +484,17 @@ app.post("/assignmentsTab", (req, res) => {
     assessmentID = 1; 
     file = req.files.assFile;
     file_name = file.name;
-    submitAssignment.submitAssignment(courseID, year, sem, assessmentID, studentID, file, file_name, res);
+    submitAssignment.submitAssignment(req.cookies.courseID, req.cookies.year, req.cookies.sem, assessmentID, studentID, file, file_name, res);
   }
 });
 
-app.get("/viewFeedback/:courseid/:year/:sem", (req, res) => {
+app.get("/viewFeedback", (req, res) => {
   //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
   //sem = req.session.userinfo.sem;
   //year = req.session.userinfo.year;
   studentID= req.cookies.username;
   (async () => {
-   let result = await feedback.feedback(req.params.courseid, req.params.year, req.params.sem, studentID);
+   let result = await feedback.feedback(req.cookies.courseID, req.cookies.year, req.cookies.sem, studentID);
    console.log("here", result)
    res.render("viewFeedback", {assignments: result});
  })();
@@ -514,7 +516,7 @@ app.post("/uploadResource", async (req, res) => {
   sem_offered="spring"
   instructorID= 0
 
-  uploadResource.uploadResource(100, "lecture", 2001, "fall", 1234, file, res,title,s3)
+  uploadResource.uploadResource(req.cookies.courseID, "lecture", req.cookies.year, req.cookies.sem, req.cookies.username, file, res,title,s3)
   /* For testing
   file.mv('./public/resources/'+file.name, async function(err) {
     if(err)
@@ -540,14 +542,15 @@ app.get('/file/:filepath',async (req,res)=>{
 
 });
 
-app.get('/viewResources/:courseid/:year/:sem',(req,res)=>{
-  viewResource.viewResource(req.params.courseid,req.params.year,req.params.sem,res);
+app.get('/viewResources',(req,res)=>{
+  viewResource.viewResource(req.cookies.courseID,req.cookies.year,req.cookies.sem,res);
 });
 
-app.get('/viewRoster/:courseid/:year/:sem',(req,res)=>{
-  viewRoster.viewRoster(req.params.courseid,req.params.year,req.params.sem,res);
+app.get('/viewRoster',(req,res)=>{
+  viewRoster.viewRoster(req.cookies.courseID,req.cookies.year,req.cookies.sem,res);
 });
 
 app.listen(5000,()=>{
   console.log("Server has started on port 5000");
 });
+
