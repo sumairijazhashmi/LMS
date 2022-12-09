@@ -383,6 +383,7 @@ app.post("/postFeedback",(req,res)=>{
 });
 
 app.get("/postAssignment", (req, res)=> {
+  
   res.render("postAssignment", {message: ""});
 })
 
@@ -401,8 +402,8 @@ app.post("/postAssignment", (req, res)=> {
   made_by = req.body.made_by;
   // console.log("title should be here", title);
   // assessment id = prev id + 1
-  assessmentID = 50;
-  postAssignment.postAssignment(assessmentID, title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res);
+  // assessmentID = req.body.assessmentID;
+  postAssignment.postAssignment(title, text, file, file_name, marks, due_date, release_date, course_name, course_code, year, sem, made_by, res, s3);
 })
 
 app.get("/CreateAnnouncement", (req, res)=> {
