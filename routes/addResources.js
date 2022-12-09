@@ -40,7 +40,7 @@ const uploadResource = async (course_id, resource_type,year_offered, sem_offered
         var params = {
             Key : resource_key,
             Body : file.data,
-            Bucket: "cyclic-thoughtful-long-underwear-duck-eu-central-1",
+            Bucket: "cyclic-sore-erin-perch-shoe-eu-west-3",
             ContentType : file.mimetype //filetype pdf/docx/xls etc
         }
     
