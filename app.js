@@ -333,12 +333,13 @@ app.post("/studenthome",(req,res)=>{
     res.render("main", {message: "Logged Out!"});
   }
   else{
+    console.log(req.body.button);
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
     console.log(req.session.userinfo);
-    req.session.userinfo.courseID = obj["course_id"];
-    req.session.userinfo.sem = obj["sem"];
-    req.session.userinfo.year = obj["year"];
+    req.session.userinfo.courseID = obj.course_id;
+    req.session.userinfo.sem = obj.sem;
+    req.session.userinfo.year = obj.year;
     if(obj.tab == "viewAssignments") {
       res.redirect("/assignmentsTab");
     }
