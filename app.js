@@ -490,7 +490,7 @@ app.get("/viewFeedback/:courseid/:year/:sem", (req, res) => {
   //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
   //sem = req.session.userinfo.sem;
   //year = req.session.userinfo.year;
-  studentID= req.session.userinfo.username;
+  studentID= req.cookies.username;
   (async () => {
    let result = await feedback.feedback(req.params.courseid, req.params.year, req.params.sem, studentID);
    console.log("here", result)

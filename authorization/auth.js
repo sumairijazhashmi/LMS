@@ -21,6 +21,14 @@ const login = async (username,password, res, req) => {
             else {
                 if (results[0].role == 'instructor')
                 {
+                    res.cookie(
+                        'username', 
+                        username,
+                        {
+                            maxAge: 900000,
+                            httpOnly: true
+                        }
+                    )
                     req.session.userinfo = {
                         username: username,
                         role: 'instructor',
@@ -32,6 +40,14 @@ const login = async (username,password, res, req) => {
                 }
                 else if (results[0].role == 'admin')
                 {
+                    res.cookie(
+                        'username', 
+                        username,
+                        {
+                            maxAge: 900000,
+                            httpOnly: true
+                        }
+                    )
                     req.session.userinfo = {
                         username: username,
                         role: 'admin',
@@ -40,6 +56,14 @@ const login = async (username,password, res, req) => {
                 }
                 else if (results[0].role == 'student')
                 {
+                    res.cookie(
+                        'username', 
+                        username,
+                        {
+                            maxAge: 900000,
+                            httpOnly: true
+                        }
+                    )
                     req.session.userinfo = {
                         username: username,
                         role: 'student',
