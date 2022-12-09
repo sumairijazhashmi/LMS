@@ -335,6 +335,7 @@ app.post("/studenthome",(req,res)=>{
   else{
     var obj = JSON.parse(req.body.button);
     console.log(obj.tab);
+    console.log("session keys------------------");
     console.log(req.session.userinfo);
     req.session.userinfo.courseID = obj.course_id;
     req.session.userinfo.sem = obj.sem;
