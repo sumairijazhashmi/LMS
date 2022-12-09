@@ -23,27 +23,27 @@
                                   </div>
                                   <div class="card-body">
                                     <h4>Course ID: <%=JSON.stringify(courses[x][y][z].course_id)%></h4>
-                                    <form action="/studenthome" method="POST">
+                                    <form action="/studenthome" method="GET">
                                         <div>
                             
-                                            <button type="submit" name="button" value='{"tab": "viewAnnouncements", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Announcements</button>
+                                            <button type="submit" name="button" formaction='/viewAnnouncements/<%=courses[x][y][z].course_id%>/<%=x%>/<%=y%>' style="margin: 8px; height: 35px;">Announcements</button>
         
                                         </div>
                                         <br> 
                                         <div>
-                                            <button type="submit" name="button" value='{"tab": "viewAssignments", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Assignments</button>                                        
+                                            <button type="submit" name="button" formaction='/assignmentsTab/<%=courses[x][y][z].course_id%>/<%=x%>/<%=y%>' style="margin: 8px; height: 35px;">Assignments</button>                                        
                                         </div>
                                         <br>
                                         <div>
-                                            <button type="submit" name="button" value='{"tab": "viewFeedback", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Feedback</button>                                        
+                                            <button type="submit" name="button" formaction='/viewFeedback/<%=courses[x][y][z].course_id%>/<%=x%>/<%=y%>' style="margin: 8px; height: 35px;">Feedback</button>                                        
                                         </div>
                                         <br>
                                         <div>
-                                            <button type="submit" name="button" value='{"tab": "viewResources", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Resources</button>                                        
+                                            <button type="submit" name="button" formaction='/viewResources/<%=courses[x][y][z].course_id%>/<%=x%>/<%=y%>' style="margin: 8px; height: 35px;">Resources</button>                                        
                                         </div>
                                         <br>  
                                         <div>
-                                            <button type="submit" name="button" value='{"tab": "viewRoster", "course_id": "<%=courses[x][y][z].course_id%>", "sem": "<%=y%>", "year": "<%=x%>"}' style="margin: 8px; height: 35px;">Roster</button>                                        
+                                            <button type="submit" name="button" formaction='/viewRoster/<%=courses[x][y][z].course_id%>/<%=x%>/<%=y%>' style="margin: 8px; height: 35px;">Roster</button>                                        
                                         </div>
                                         <br>
                     
