@@ -488,21 +488,9 @@ app.get("/postFeedback", (req, res)=> {
 app.post("/postFeedback",(req,res)=>{
   
   if(req.cookies.role=="instructor"){
-    console.log(req.session.userinfo)
-  userID = req.body.userID
-  courseID = req.session.userinfo.courseID
-  year = req.session.userinfo.year
-  sem = req.session.userinfo.sem
-  score = req.body.score
-  due_date = req.body.due_date
-  console.log("userID: ", userID)
-  console.log("courseID: ", courseID)
-  console.log("year: ", year)
-  console.log("sem: ", sem)
-  console.log("score: ", score)
-  console.log("due_date: ", due_date)
-
-  postFeedback.postFeedback(userID, req.cookies.courseID, req.cookies.year, req.cookies.sem, due_date, score, res)
+    // get userID field from the submission form
+  // userID = req.body.userID;
+    postFeedback.postFeedback(req.body.userID, req.cookies.courseID, req.cookies.year, req.cookies.sem, req.body.filename, req.body.score, res)
   }
   else
   {

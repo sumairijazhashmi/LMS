@@ -23,21 +23,24 @@ function seedData(query) {
     });
 }
 
-const postFeedback = async (username, courseID, year, sem, due_date, score, res)=> {
+const postFeedback = async (username, courseID, year, sem, filename, score, res)=> {
     try {
         console.log("hello i am here in postFeedback\n");
         if (!username || !courseID || !year || !sem || !score) {
             return res.status(400).render("postFeedback", { message: "Please provide an ID and Passwords" });
         }
-        // ass_data = course_id + "-" + year + "-" + semester + "-" + due_date;
-        lms_db.query("SELECT * FROM Attempts WHERE ass_data = ? and student_ID = ?", [`${courseID}-${year}-${sem}-${due_date}`, username], async (error, results) => {
+        //  // Schema for attempts table:
+    // student_id | course_id | year_offered | sem_offered | ass_data | submitted_attachment| score |
+        lms_db.query("SELECT * FROM Attempts WHERE ass_data = ? and student_ID = ?", [`${courseID}-${year}-${sem}-${filename}`, username], async (error, results) => {
             if (results.length === 0) {
                 res.status(401).render("postFeedback", { message: "Incorrect Information Entered" });
             }
             else {
-                let score_query = `Update Attempts Set score="${score}" where ass_data = "${courseID}-${year}-${sem}-${due_date}" and student_ID = ${username};`;
+                let score_query = `Update Attempts Set score="${score}" where ass_data = "${courseID}-${year}-${sem}-${filename}" and student_ID = ${username};`;
                 let x = await seedData(score_query);
                 console.log("Score Updated");
+                // send back to home page
+                res.status(200).redirect("/instructorhome");
             }
         });
     } catch (error) {
