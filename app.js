@@ -82,7 +82,7 @@ app.get("/main",(req,res)=>{
 app.get("/adminHome",(req,res)=>{
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'admin'){
-    res.render("adminHome", {message: ""}); // file name original 
+    res.render("adminhome", {message: ""}); // file name original 
   } else {
     res.redirect("/main");
   }
@@ -90,32 +90,66 @@ app.get("/adminHome",(req,res)=>{
 );
 
 app.get("/updatePassword",(req,res)=>{
-  res.render("updatePassword", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("updatePassword", {message: ""}); // file name original 
+  }
+  else
+  {
+    res.redirect("/main");
+  }
 }
 );
 
 app.get("/addNewCourse",(req,res)=>{
-  res.render("addNewCourse", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("addNewCourse", {message: ""}); // file name original
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+   
 }
 );
 
 app.get("/student_course",(req,res)=>{
-  res.render("student_course", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("student_course", {message: ""}); // file name original
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+   
 }
 );
 
 app.get("/searchCourse",(req,res)=>{
-  res.render("searchCourse", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("searchCourse", {message: ""}); // file name original 
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+ 
 }
 );
 
 
 app.get("/del_student_course",(req,res)=>{
-  res.render("del_student_course", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("del_student_course", {message: ""}); // file name original 
+  }
+  else
+  {
+    res.redirect("/main");
+  }
 }
 );
 
 app.get("/studenthome",(req,res)=>{
+  
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'student'){
     // call the viewCourses function
@@ -134,12 +168,26 @@ app.get("/studenthome",(req,res)=>{
 // );
 
 app.get("/removeExistingCourse",(req,res)=>{
-  res.render("removeExistingCourse", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("removeExistingCourse", {message: ""}); // file name original 
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 }
 );
 
 app.get("/updateProfile",(req,res)=>{
-  res.render("updateProfile", {message: ""}); // file name original 
+  if(req.cookies.role=="admin"){
+    res.render("updateProfile", {message: ""}); // file name original  
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 }
 );
 
@@ -185,36 +233,65 @@ app.get("/message",(req,res)=>{
 
 
 app.get("/delete",(req,res)=>{
-  res.render("delete", {
-    status:"display: none",
-    noRecords:"display: none",
-    data: ""
-});
+  if(req.cookies.role=="admin"){
+    res.render("delete", {
+      status:"display: none",
+      noRecords:"display: none",
+      data: ""
+  });
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 });
 app.post("/deleteDetails/:id/:role",async(req,res)=>{
-  let id1 = req.params.id;
-  let role=req.params.role;
-  accounts.delDetail(id1,role,res);
+  if(req.cookies.role=="admin"){
+    let id1 = req.params.id;
+    let role=req.params.role;
+    accounts.delDetail(id1,role,res);
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
+ 
 })
 
 app.get("/register",(req,res)=>{
-  res.render("register", {
-    myVar: ""
-});
+  if(req.cookies.role=="admin"){
+    res.render("register", {
+      myVar: ""
+  });
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+ 
 })
 
 app.get("/logout",(req,res)=>{
+  
   req.session.destroy();
   res.render("main", {message: "Logged Out!"});
 })
 
 app.post("/delete",async (req,res)=>{
-  accounts.delAcc(req,res);
+  if(req.cookies.role=="admin"){
+    accounts.delAcc(req,res);
+  }
+  else
+  {
+    res.redirect("/main");
+  }
 });
 
 app.post("/updatePassword",(req,res)=>{
-
-  userID = req.body.userID
+  if(req.cookies.role=="admin"){
+    userID = req.body.userID
   oldPass = req.body.oldPass
   newPass = req.body.newPass
   rePass = req.body.rePass
@@ -222,11 +299,18 @@ app.post("/updatePassword",(req,res)=>{
 
   updatePass.updatePass(userID, oldPass, newPass, rePass, res)
   
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+
+  
 });
 
 app.post("/updateProfile",(req,res)=>{
-
-  userID = req.body.userID
+  if(req.cookies.role=="admin"){
+    userID = req.body.userID
   // newUserID = req.body.newUserID
   newName = req.body.newName
   newEmail = req.body.newEmail
@@ -235,11 +319,18 @@ app.post("/updateProfile",(req,res)=>{
 
   updateProfile.updateProfile(userID, newName, newEmail, res)
   
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+
+  
 });
 
 app.post("/addNewCourse",(req,res)=>{
-
-  courseName = req.body.courseName
+  if(req.cookies.role=="admin"){
+    courseName = req.body.courseName
   courseCode = req.body.courseCode
   instructor = req.body.instructor
   year = req.body.year
@@ -247,38 +338,60 @@ app.post("/addNewCourse",(req,res)=>{
   credit_hrs = req.body.credit_hrs
 
   courses.addCourse(courseName, courseCode, instructor, year, semmester, credit_hrs, res)
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+
+  
   
 });
 
 app.post("/student_course",(req,res)=>{
-
-  courseID = req.body.courseCode
+  if(req.cookies.role=="admin"){
+    courseID = req.body.courseCode
   studentID = req.body.studentID
   year = req.body.year
   semmester = req.body.sem
   instructor = req.body.instructor
-
-
   student_course.addCourseToStudent(courseID, studentID, year, semmester , instructor, res)
+  }
+  else
+  {
+    res.redirect("/main");
+  }
   
 });
 
 app.post("/del_student_course",(req,res)=>{
-
-  courseID = req.body.courseCode
+  if(req.cookies.role=="admin"){
+    courseID = req.body.courseCode
   studentID = req.body.studentID
 
-
   student_course.delCourseFromStudent(courseID, studentID, res)
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+
+  
   
 });
 
 app.post("/removeExistingCourse",(req,res)=>{
-
-  courseName = req.body.courseName
+  if(req.cookies.role=="admin"){
+    courseName = req.body.courseName
   courseCode = req.body.courseCode
-
   courses.delCourse(courseName, courseCode, res)
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+
+  
   
 });
 
@@ -362,11 +475,20 @@ app.post("/studenthome",(req,res)=>{
 });
 
 app.get("/postFeedback", (req, res)=> {
-  console.log("HI I AM HERE")
+  if(req.cookies.role=="instructor"){
+    console.log("HI I AM HERE")
   res.render("postFeedback", {message: ""});
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 })
 app.post("/postFeedback",(req,res)=>{
-  console.log(req.session.userinfo)
+  
+  if(req.cookies.role=="instructor"){
+    console.log(req.session.userinfo)
   userID = req.body.userID
   courseID = req.session.userinfo.courseID
   year = req.session.userinfo.year
@@ -381,15 +503,27 @@ app.post("/postFeedback",(req,res)=>{
   console.log("due_date: ", due_date)
 
   postFeedback.postFeedback(userID, req.cookies.courseID, req.cookies.year, req.cookies.sem, due_date, score, res)
-  
+  }
+  else
+  {
+    res.redirect("/main");
+  }
 });
 
 app.get("/postAssignment", (req, res)=> {
+  if(req.cookies.role=="instructor"){
+    res.render("postAssignment", {message: ""});
+  }
+  else
+  {
+    res.redirect("/main");
+  }
   
-  res.render("postAssignment", {message: ""});
+  
 })
 
 app.post("/postAssignment", (req, res)=> {
+  
   title = req.body.assTitle;
   text = req.body.assText;
   file = req.files.assFile;
@@ -409,7 +543,14 @@ app.post("/postAssignment", (req, res)=> {
 })
 
 app.get("/CreateAnnouncement", (req, res)=> {
-  res.render("CreateAnnouncement", {message: ""});
+  if(req.cookies.role=="instructor"){
+    res.render("CreateAnnouncement", {message: ""});
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 })
 
 
@@ -440,40 +581,53 @@ app.get("/viewAnnouncements", (req, res) => {
   //sem = req.session.userinfo.sem;
   //year = req.session.userinfo.year;
   //studentID= req.session.userinfo.username;
-  (async () => {
-   let result = await viewAnnouncements.viewAnnouncements(req.cookies.courseID, req.cookies.year, req.cookies.sem,res);
-   console.log("here", result)
-   res.render("viewAnnouncements", {announcements: result});
- })();
+  if(req.cookies.role=="student"){
+    (async () => {
+      let result = await viewAnnouncements.viewAnnouncements(req.cookies.courseID, req.cookies.year, req.cookies.sem,res);
+      console.log("here", result)
+      res.render("viewAnnouncements", {announcements: result});
+    })();
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 });
 
 
 app.post("/register",async (req,res)=>{
-  my_var="";
-  userName = req.body.username;
-  name1=req.body.fullName;
-  email = req.body.emailAddress;
-  password1 = req.body.password1;
-  password2 = req.body.password2;
-  radio=req.body.optradio;
-  console.log("hiii");
-  console.log(userName, password1,name1,email,password2,radio);
-  accounts.addAcc(userName, password1,name1,email,radio,my_var,res);
+  if(req.cookies.role=="admin"){
+    my_var="";
+    userName = req.body.username;
+    name1=req.body.fullName;
+    email = req.body.emailAddress;
+    password1 = req.body.password1;
+    password2 = req.body.password2;
+    radio=req.body.optradio;
+    console.log("hiii");
+    console.log(userName, password1,name1,email,password2,radio);
+    accounts.addAcc(userName, password1,name1,email,radio,my_var,res);
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+ 
 });
 
 
 
 app.get("/assignmentsTab", (req, res) => {
-  //  (async () => {
-  //   let result = await 
-  //   console.log("what am i going to render: ", result)
-  //   res.render("assignmentsTab", {assignments: result});
-  // })();
-  // res.render("assignmentsTab", {assignments: result});
-  assignmentsTab.assignmentsTab(req.cookies.courseID, req.cookies.year, req.cookies.sem, res);
+  if(req.cookies.role=="student"){
+    assignmentsTab.assignmentsTab(req.cookies.courseID, req.cookies.year, req.cookies.sem, res);
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 });
-
-
 app.get('/file2/:filepath',async (req,res)=>{
   //console.log("path:",req.params.filepath)
   assignmentsTab.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
@@ -498,18 +652,32 @@ app.get("/viewFeedback", (req, res) => {
   //courseID = req.session.userinfo.courseID; // need to somehow store the course's specific ids here
   //sem = req.session.userinfo.sem;
   //year = req.session.userinfo.year;
-  studentID= req.cookies.username;
+  if(req.cookies.role=="student"){
+    studentID= req.cookies.username;
   (async () => {
    let result = await feedback.feedback(req.cookies.courseID, req.cookies.year, req.cookies.sem, studentID);
    console.log("here", result)
    res.render("viewFeedback", {assignments: result});
  })();
+  }
+  else
+  {
+    res.redirect("/main");
+  }
+  
 });
 app.get("/uploadResource", (req, res) => {
-  res.render('uploadResource',
+  
+  if(req.cookies.role=="instructor"){
+    res.render('uploadResource',
   {
     message:''
   })
+  }
+  else
+  {
+    res.redirect("/main");
+  }
 });
 app.post("/uploadResource", async (req, res) => {
   
