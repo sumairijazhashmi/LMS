@@ -464,14 +464,20 @@ app.post("/register",async (req,res)=>{
 
 
 app.get("/assignmentsTab", (req, res) => {
-   courseID = 420; // need to somehow store the course's specific ids here
-   sem = "spring";
-   year = 2022;
-   (async () => {
-    let result = await assignmentsTab.assignmentsTab(req.cookies.courseID, req.cookies.year, req.cookies.sem);
-    console.log("here", result)
-    res.render("assignmentsTab", {assignments: result});
-  })();
+  //  (async () => {
+  //   let result = await 
+  //   console.log("what am i going to render: ", result)
+  //   res.render("assignmentsTab", {assignments: result});
+  // })();
+  // res.render("assignmentsTab", {assignments: result});
+  assignmentsTab.assignmentsTab(req.cookies.courseID, req.cookies.year, req.cookies.sem, res);
+});
+
+
+app.get('/file/:filepath',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  assignmentsTab.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
+
 });
 
 app.post("/assignmentsTab", (req, res) => {
