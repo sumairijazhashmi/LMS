@@ -14,19 +14,22 @@
                             </tr>
                         </thead> 
                          <tbody>
-                            <% for(var i=0; i<assignments.length; i++){ %>
+                              <% for(let i=0;i<data.length;i++) {%> <!--run for loop for each file-->
                             <tr>
-                                <td> <%=assignments[i].topic%></td>
-                                <td> <%=assignments[i].ass_text%> </td>
-                                <td> </td>
-                                <td> <%=assignments[i].released_date%> </td>
-                                <td> <%=assignments[i].due_date%></td>
+                                <td> <%=data[i].topic%></td>
+                                <td> <%=data[i].ass_text%> </td>
+                                <td> <a href="/file/<%=data[i].ass_key%>">File</a> </td>
+                                <td> <%=data[i].released_date%> </td>
+                                <td> <%=data[i].due_date%></td>
                                 <td> <input class="form-control" type="file" placeholder="Upload File" name="assFile" accept="">
                                     <button type="submit" name="button" value="SubmitAss">Submit</button> </td> 
                             </tr> 
                             <% } %>
+                            
                         </tbody>
                     </table>
+          <div class="display-6 justify-content-center align-items-center mt-3 py-2" style="<%=noRecords%>; font-size: 15px; background-color: #afe0bd;">No Resources Found</div>
+
                     </form>
 
 </body>
