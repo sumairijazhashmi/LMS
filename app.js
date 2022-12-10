@@ -29,6 +29,7 @@ const viewResource=require('./routes/viewResource');
 const viewRoster=require('./routes/viewRoster');
 const viewAnnouncements =require('./routes/viewAnnouncements');
 const AWS = require("aws-sdk");
+const viewSubmit = require('./routes/viewSubmitted')
 const s3 = new AWS.S3();
 // authorization\auth.js
 const app = express();
@@ -431,6 +432,10 @@ app.post("/instructorhome",(req,res)=>{
     else if(obj.tab == "viewRoster") {
       res.redirect("/viewRoster");
     }
+    else if(obj.tab == "viewSubmissions") {
+      console.log("here------------")
+      res.redirect("/viewSubmission");
+    }
   }
   
 });
@@ -707,10 +712,20 @@ app.get('/viewResources',(req,res)=>{
 app.get('/viewRoster',(req,res)=>{
   viewRoster.viewRoster(req.cookies.courseID,req.cookies.year,req.cookies.sem,res);
 });
+app.get('/viewSubmission',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  console.log("here i am")
+  await viewSubmit.viewAttempts(req.cookies.courseID,req.cookies.year,req.cookies.sem,res) //S3 is aws bucket instance
 
+});
 app.get('/file3/:filepath',async (req,res)=>{
   //console.log("path:",req.params.filepath)
   submitAssignment.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
+
+});
+app.get('/file4/:filepath',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  viewSubmit.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
 
 });
 
