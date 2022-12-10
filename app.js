@@ -474,7 +474,7 @@ app.get("/assignmentsTab", (req, res) => {
 });
 
 
-app.get('/file/:filepath',async (req,res)=>{
+app.get('/file2/:filepath',async (req,res)=>{
   //console.log("path:",req.params.filepath)
   assignmentsTab.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
 
