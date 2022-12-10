@@ -637,14 +637,10 @@ app.get('/file2/:filepath',async (req,res)=>{
 app.post("/assignmentsTab", (req, res) => {
 
   if(req.body.button == "SubmitAss") {
-    courseID = 420; // need to somehow store the course's specific ids here
-    sem = "spring";
-    year = 2022;
-    studentID = 421;
-    assessmentID = 1; 
+    studentID= req.cookies.username;
     file = req.files.assFile;
     file_name = file.name;
-    submitAssignment.submitAssignment(req.cookies.courseID, req.cookies.year, req.cookies.sem, assessmentID, studentID, file, file_name, res);
+    submitAssignment.submitAssignment(req.cookies.courseID, req.cookies.year, req.cookies.sem, studentID, file, file_name, res, s3);
   }
 });
 
@@ -722,6 +718,12 @@ app.get('/viewResources',(req,res)=>{
 
 app.get('/viewRoster',(req,res)=>{
   viewRoster.viewRoster(req.cookies.courseID,req.cookies.year,req.cookies.sem,res);
+});
+
+app.get('/file3/:filepath',async (req,res)=>{
+  //console.log("path:",req.params.filepath)
+  submitAssignment.manageFile(req.params.filepath,res,s3) //S3 is aws bucket instance
+
 });
 
 app.listen(5000,()=>{
