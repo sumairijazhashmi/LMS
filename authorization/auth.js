@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv").config();
 
+var crypto = require('crypto');
+
 const login = async (username,password, res, req) => {
     try {
         if (!username || !password) {
@@ -15,7 +17,9 @@ const login = async (username,password, res, req) => {
             //     res.status(401).render("main", {message: "Username or Password is incorrect"});
             // } 
             console.log(results);
-            if (results.length === 0 || password != results[0].password) {
+            salt = "5gz"
+            var hash = crypto.pbkdf2Sync(password, salt, 1000, 32, `sha512`).toString(`hex`); 
+            if (results.length === 0 || hash != results[0].password) {
                 res.status(401).render("main", {message: "Username or Password is incorrect"});
             } 
             else {
@@ -119,7 +123,3 @@ const login = async (username,password, res, req) => {
 module.exports = {
     login
 };
-
-
-
-
