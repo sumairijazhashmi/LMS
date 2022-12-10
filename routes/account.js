@@ -85,6 +85,7 @@ async function addAcc (userName, password1,name1,email,radio,my_var,res)
   else
   {
     salt = "5gz"
+     password2=password1
     password1 = crypto.pbkdf2Sync(password1, salt,  1000, 32, `sha512`).toString(`hex`);
 
     let query = `insert into Account (username, password, role, email, name) values("${userName}","${password1}", "${radio}","${email}", "${name1}")`;
@@ -110,7 +111,7 @@ async function addAcc (userName, password1,name1,email,radio,my_var,res)
     my_var="Account created. Credential email sent to user."
     text=`Dear ${name1},\n\tHope you are doing well. We congratulate you on Joining LUMS. Please find your LMS login credentials below.
     \nUsername: ${userName}
-    \nPassword: ${password1}
+    \nPassword: ${password2}
     \nPlease DO NOT share your credentails with anyone.\nLMS link: http://127.0.0.1:5000/login
     \nRegards,\nOffice of the Registrar, LUMS
     `
