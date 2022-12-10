@@ -82,7 +82,7 @@ app.get("/main",(req,res)=>{
 app.get("/adminHome",(req,res)=>{
   console.log(req.session.userinfo);
   if(req.session.userinfo && req.session.userinfo.role == 'admin'){
-    res.render("adminhome", {message: ""}); // file name original 
+    res.render("adminHome", {message: ""}); // file name original 
   } else {
     res.redirect("/main");
   }
