@@ -29,6 +29,15 @@ const login = async (username,password, res, req) => {
                             httpOnly: true
                         }
                     )
+                    res.cookie(
+                        'role', 
+                        "instructor",
+                        {
+                            maxAge: 900000,
+                            httpOnly: true,
+                            overwrite:true
+                        }
+                    )
                     req.session.userinfo = {
                         username: username,
                         role: 'instructor',
@@ -48,6 +57,15 @@ const login = async (username,password, res, req) => {
                             httpOnly: true
                         }
                     )
+                    res.cookie(
+                        'role', 
+                        "admin",
+                        {
+                            maxAge: 900000,
+                            httpOnly: true,
+                            overwrite:true
+                        }
+                    )
                     req.session.userinfo = {
                         username: username,
                         role: 'admin',
@@ -62,6 +80,15 @@ const login = async (username,password, res, req) => {
                         {
                             maxAge: 900000,
                             httpOnly: true
+                        }
+                    )
+                    res.cookie(
+                        'role', 
+                        "student",
+                        {
+                            maxAge: 900000,
+                            httpOnly: true,
+                            overwrite:true
                         }
                     )
                     req.session.userinfo = {
@@ -92,5 +119,7 @@ const login = async (username,password, res, req) => {
 module.exports = {
     login
 };
+
+
 
 
