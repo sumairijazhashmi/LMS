@@ -1,3 +1,10 @@
-#Learning Management System
+# Learning Management System
 
-This project implements a university level LMS and allows course management for instructors and students. Developed uisng NodeJS, ExpressJS and server disk is deployed on AWS cloud.
+This project implements a university level LMS and allows course management for instructors and students. 
+---
+#### Technologies Used:
+* NodeJS
+* ExpressJS
+* Deployed on AWS cloud
+* Automated Emails
+* SQL Database
